@@ -23,14 +23,12 @@ let package = Package(
   targets: [
     .target(
       name: "MicroMaxCBridge",
-      path: "MicroMaxOnAppleSilicon/CBridge",
-      cSettings: [.unsafeFlags(["-std=gnu17"])]
+      path: "MicroMaxOnAppleSilicon/CBridge"
     ),
     .target(
       name: "MicroMaxCppBridge",
       dependencies: ["MicroMaxCBridge"],
-      path: "MicroMaxOnAppleSilicon/CppBridge",
-      cxxSettings: [.unsafeFlags(["-std=c++20"])]
+      path: "MicroMaxOnAppleSilicon/CppBridge"
     ),
     .target(
       name: "MicroMaxObjCBridge",
@@ -49,5 +47,7 @@ let package = Package(
       dependencies: ["MicroMaxCBridge", "MicroMaxCppBridge", "MicroMaxObjCBridge", "MicroMaxOnAppleSilicon"],
       resources: [.copy("fmax.ini")]
     ),
-  ]
+  ],
+  cLanguageStandard: .gnu17,
+  cxxLanguageStandard: .cxx20
 )

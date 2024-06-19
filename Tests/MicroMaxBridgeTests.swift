@@ -35,23 +35,23 @@ class MicroMaxOnAppleSiliconTests: XCTestCase {
   }
 
   func testCoordinateToFileRank() {
-    XCTAssertEqual(FileRank(bridge.coordinateToFileRank(.B1)), FileRank(file: 1, rank: 0))
-    XCTAssertEqual(FileRank(bridge.coordinateToFileRank(.B3)), FileRank(file: 1, rank: 2))
-    XCTAssertEqual(FileRank(bridge.coordinateToFileRank(.C3)), FileRank(file: 2, rank: 2))
-    XCTAssertEqual(FileRank(bridge.coordinateToFileRank(.D2)), FileRank(file: 3, rank: 1))
-    XCTAssertEqual(FileRank(bridge.coordinateToFileRank(.D3)), FileRank(file: 3, rank: 2))
-    XCTAssertEqual(FileRank(bridge.coordinateToFileRank(.D8)), FileRank(file: 3, rank: 7))
-    XCTAssertEqual(FileRank(bridge.coordinateToFileRank(.H4)), FileRank(file: 7, rank: 3))
+    XCTAssertEqual(FileRank(coordinateToFileRank(.B1)), FileRank(file: 1, rank: 0))
+    XCTAssertEqual(FileRank(coordinateToFileRank(.B3)), FileRank(file: 1, rank: 2))
+    XCTAssertEqual(FileRank(coordinateToFileRank(.C3)), FileRank(file: 2, rank: 2))
+    XCTAssertEqual(FileRank(coordinateToFileRank(.D2)), FileRank(file: 3, rank: 1))
+    XCTAssertEqual(FileRank(coordinateToFileRank(.D3)), FileRank(file: 3, rank: 2))
+    XCTAssertEqual(FileRank(coordinateToFileRank(.D8)), FileRank(file: 3, rank: 7))
+    XCTAssertEqual(FileRank(coordinateToFileRank(.H4)), FileRank(file: 7, rank: 3))
   }
 
   func testFileRankToCoordinate() {
-    XCTAssertEqual(bridge.fileRankToCoordinate(file: 1, rank: 0), .B1)
-    XCTAssertEqual(bridge.fileRankToCoordinate(file: 1, rank: 2), .B3)
-    XCTAssertEqual(bridge.fileRankToCoordinate(file: 2, rank: 2), .C3)
-    XCTAssertEqual(bridge.fileRankToCoordinate(file: 3, rank: 1), .D2)
-    XCTAssertEqual(bridge.fileRankToCoordinate(file: 3, rank: 2), .D3)
-    XCTAssertEqual(bridge.fileRankToCoordinate(file: 3, rank: 7), .D8)
-    XCTAssertEqual(bridge.fileRankToCoordinate(file: 7, rank: 3), .H4)
+    XCTAssertEqual(fileRankToCoordinate(file: 1, rank: 0), .B1)
+    XCTAssertEqual(fileRankToCoordinate(file: 1, rank: 2), .B3)
+    XCTAssertEqual(fileRankToCoordinate(file: 2, rank: 2), .C3)
+    XCTAssertEqual(fileRankToCoordinate(file: 3, rank: 1), .D2)
+    XCTAssertEqual(fileRankToCoordinate(file: 3, rank: 2), .D3)
+    XCTAssertEqual(fileRankToCoordinate(file: 3, rank: 7), .D8)
+    XCTAssertEqual(fileRankToCoordinate(file: 7, rank: 3), .H4)
   }
 
   func testMoveLegality() {

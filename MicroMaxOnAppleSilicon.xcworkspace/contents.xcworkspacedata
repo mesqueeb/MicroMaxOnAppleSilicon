@@ -289,6 +289,9 @@
             location = "group:MicroMaxBridge.swift">
          </FileRef>
          <FileRef
+            location = "group:Helpers.swift">
+         </FileRef>
+         <FileRef
             location = "group:Types.swift">
          </FileRef>
       </Group>

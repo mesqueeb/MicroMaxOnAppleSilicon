@@ -1,9 +1,30 @@
+.DS_Store
+node_modules
+
+boost/
+cmake-build-*
+xcframework
+build.log
+fuego-on-ios.xcodeproj/xcuserdata/
+fuego-on-ios.xcodeproj/project.xcworkspace/
+build/
+DerivedData/
+ios/
+windows/build.cmd
+
+SceneMetadataList.json
+ShaderGraphEditorPluginID/*
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
 ## User settings
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
 xcuserdata/
+*.rcuserdata
+*.realitycomposerpro/PluginData/*
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint

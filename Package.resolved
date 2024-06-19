@@ -1,0 +1,15 @@
+{
+  "originHash" : "4e5fe06b3362adb7407adcf0473cd75888f712a7e890ff6910f8bd77e7917045",
+  "pins" : [
+    {
+      "identity" : "asyncify",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mesqueeb/Asyncify",
+      "state" : {
+        "revision" : "ee4a025acc8d5c9d2bb85b27d876bcb2211868aa",
+        "version" : "0.0.3"
+      }
+    }
+  ],
+  "version" : 3
+}

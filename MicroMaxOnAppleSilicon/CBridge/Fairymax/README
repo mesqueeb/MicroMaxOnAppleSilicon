@@ -1,0 +1,30 @@
+This package contains the sources of the XBoard-compatible Chess and
+Chess-variant engine Fairy-Max, and its dedicated derivatives ShaMax 
+(for Shatranj) and MaxQi (for XiangQi = Chinese Chess). A Makefile
+is provided to compile and install them. Normally this would require only
+the command (given from the main directory of the package):
+
+sudo make install
+
+This will install the executables in /usr/games, (where XBoard expects
+them), and their data files in /usr/share/games/fairymax.
+
+Should you want to compile by hand, you could use the following 
+commands:
+
+gcc -O2 fairymax.c -o fairymax
+
+gcc -O2 fairymax.c -DSHATRANJ -o shamax
+
+gcc -O2 maxqi.c -o maxqi
+
+In this case you will get versions that expect their fmax.ini or qmax.ini
+files in the current direcory. To change the default path of the ini files,
+you can include the argument 
+
+-DINI_FILE=\"pathname\"
+
+to the gcc compilation command line.
+
+H.G.Muller
+

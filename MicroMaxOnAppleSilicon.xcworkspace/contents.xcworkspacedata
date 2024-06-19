@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:MicroMaxTestApp/MicroMaxTestApp.xcodeproj">
+   </FileRef>
+   <Group
+      location = "group:MicroMaxOnAppleSilicon"
+      name = "MicroMaxOnAppleSilicon">
+      <Group
+         location = "group:CBridge"
+         name = "CBridge">
+         <Group
+            location = "group:include"
+            name = "include">
+         </Group>
+         <FileRef
+            location = "group:EngineContext.c">
+         </FileRef>
+         <Group
+            location = "group:Fairymax"
+            name = "Fairymax">
+            <FileRef
+               location = "group:Fairymax.c">
+            </FileRef>
+            <FileRef
+               location = "group:changelog">
+            </FileRef>
+            <FileRef
+               location = "group:Makefile">
+            </FileRef>
+            <FileRef
+               location = "group:md5sums">
+            </FileRef>
+            <FileRef
+               location = "group:README">
+            </FileRef>
+            <FileRef
+               location = "group:fairymax.pod">
+            </FileRef>
+            <FileRef
+               location = "group:copyright">
+            </FileRef>
+         </Group>
+      </Group>
+      <Group
+         location = "group:CppBridge"
+         name = "CppBridge">
+         <Group
+            location = "group:include"
+            name = "include">
+            <FileRef
+               location = "group:Resources.hpp">
+            </FileRef>
+            <FileRef
+               location = "group:ChessCore.hpp">
+            </FileRef>
+            <FileRef
+               location = "group:ProtocolReceiver.hpp">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:AbstractAdapter.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:AbstractAdapter.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:AbstractProtocol.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:Adapter.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:AdapterReceiver.hpp">
+         </FileRef>
+         <Group
+            location = "group:Bitboard"
+            name = "Bitboard">
+            <FileRef
+               location = "group:BPsqtab.h">
+            </FileRef>
+            <FileRef
+               location = "group:BMove.h">
+            </FileRef>
+            <FileRef
+               location = "group:BBitboard.h">
+            </FileRef>
+            <FileRef
+               location = "group:BBBook.cpp">
+            </FileRef>
+            <FileRef
+               location = "group:BMovegen.cpp">
+            </FileRef>
+            <FileRef
+               location = "group:BTypes.h">
+            </FileRef>
+            <FileRef
+               location = "group:BBitboard.cpp">
+            </FileRef>
+            <FileRef
+               location = "group:BMoveGen.h">
+            </FileRef>
+            <FileRef
+               location = "group:BRkiss.h">
+            </FileRef>
+            <FileRef
+               location = "group:BBitcount.h">
+            </FileRef>
+            <FileRef
+               location = "group:BPosition.cpp">
+            </FileRef>
+            <FileRef
+               location = "group:BPosition.h">
+            </FileRef>
+            <FileRef
+               location = "group:BBook.h">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:BoardConverter.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:BoardCoord.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:BoardDefinition.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:ChessCore.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:ChessNotation.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:ChessPosition.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:Core.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:CoreReceiver.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:CoreResponder.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:engine.h">
+         </FileRef>
+         <FileRef
+            location = "group:engine.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:FENParser.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:io.h">
+         </FileRef>
+         <FileRef
+            location = "group:io.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Linker.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:Listener.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:MicroMaxBridge.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Protocol.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:ProtocolParser.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:ProtocolParser.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:PThreadStaticLinker.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:PThreadStaticLinker.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Resources.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:RunLoop.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:StaticLinker.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:Types.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:UnixAdapter.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:UnixAdapter.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:UnixListener.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:UnixListener.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:Validation.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualAtom.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualAtomFactory.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualBoard.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualBoard.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualBoardState.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualMove.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualMovement.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualNode.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualPieceConverter.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualResponder.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualSquare.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:VirtualState.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:WBProtocol.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:WBProtocol.cpp">
+         </FileRef>
+         <FileRef
+            location = "group:WBProtocolParser.hpp">
+         </FileRef>
+         <FileRef
+            location = "group:WBProtocolParser.cpp">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:ObjCBridge"
+         name = "ObjCBridge">
+         <Group
+            location = "group:include"
+            name = "include">
+            <FileRef
+               location = "group:MicroMaxObjCBridge.h">
+            </FileRef>
+         </Group>
+         <FileRef
+            location = "group:fmax.ini">
+         </FileRef>
+         <FileRef
+            location = "group:EngineContext.m">
+         </FileRef>
+         <FileRef
+            location = "group:MicroMaxObjCBridge.mm">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:SwiftBridge"
+         name = "SwiftBridge">
+         <FileRef
+            location = "group:MicroMaxBridge.swift">
+         </FileRef>
+         <FileRef
+            location = "group:Types.swift">
+         </FileRef>
+      </Group>
+   </Group>
+   <Group
+      location = "group:Tests"
+      name = "Tests">
+      <FileRef
+         location = "group:MicroMaxBridgeTests.swift">
+      </FileRef>
+      <FileRef
+         location = "group:fmax.ini">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:package.json">
+   </FileRef>
+   <FileRef
+      location = "group:Package.swift">
+   </FileRef>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+</Workspace>

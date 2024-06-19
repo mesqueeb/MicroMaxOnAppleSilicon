@@ -1,0 +1,25 @@
+This package was debianized by H.G.Muller<h.g.muller@hccnet.nl> on
+Fri Jun  5 20:42:56 CEST 2009.
+
+Upstream Author(s): 
+
+    H.G. Muller <h.g.muller@hccnet.nl>
+
+Copyright: 
+
+    Copyright (C) 2009 H.G. Muller 
+
+License:
+
+    Fairy-Max 4.8 is free software, and you have permission do
+    with it whatever you want, whether it is commercial or not.
+    Note, however, that Fairy-Max can easily be configured through
+    its fmax.ini file to play Chess variants that are legally pro-
+    tected by patents, and to do so would also require permission 
+    of the holders of such patents. No guarantees are given that 
+    Fairy-Max does anything in particular, or that it would not 
+    wreck the hardware it runs on, and running it is entirely for 
+    your own risk.
+
+The Debian packaging is (C) H.G.Muller<h.g.muller@hccnet.nl>.
+

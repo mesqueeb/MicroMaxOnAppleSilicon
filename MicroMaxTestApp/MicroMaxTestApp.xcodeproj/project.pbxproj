@@ -1,0 +1,717 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F70524CA2C22C9D20001D0D0 /* MicroMaxTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70524C92C22C9D20001D0D0 /* MicroMaxTestApp.swift */; };
+		F70524CC2C22C9D20001D0D0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70524CB2C22C9D20001D0D0 /* ContentView.swift */; };
+		F70524CE2C22C9D30001D0D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F70524CD2C22C9D30001D0D0 /* Assets.xcassets */; };
+		F70524D22C22C9D30001D0D0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F70524D12C22C9D30001D0D0 /* Preview Assets.xcassets */; };
+		F70525582C22CD3D0001D0D0 /* Asyncify in Frameworks */ = {isa = PBXBuildFile; productRef = F70525572C22CD3D0001D0D0 /* Asyncify */; };
+		F705255C2C22CDEF0001D0D0 /* MicroMaxObjCBridge in Frameworks */ = {isa = PBXBuildFile; productRef = F705255B2C22CDEF0001D0D0 /* MicroMaxObjCBridge */; };
+		F70525BC2C230C8E0001D0D0 /* copyright in Resources */ = {isa = PBXBuildFile; fileRef = F70525602C230C8E0001D0D0 /* copyright */; };
+		F70525BD2C230C8E0001D0D0 /* changelog in Resources */ = {isa = PBXBuildFile; fileRef = F705255F2C230C8E0001D0D0 /* changelog */; };
+		F70525BE2C230C8E0001D0D0 /* fmax.ini in Resources */ = {isa = PBXBuildFile; fileRef = F70525B42C230C8E0001D0D0 /* fmax.ini */; };
+		F70525BF2C230C8E0001D0D0 /* md5sums in Resources */ = {isa = PBXBuildFile; fileRef = F70525642C230C8E0001D0D0 /* md5sums */; };
+		F70525C02C230C8E0001D0D0 /* fairymax.pod in Resources */ = {isa = PBXBuildFile; fileRef = F70525612C230C8E0001D0D0 /* fairymax.pod */; };
+		F70525C12C230C8E0001D0D0 /* README in Resources */ = {isa = PBXBuildFile; fileRef = F70525652C230C8E0001D0D0 /* README */; };
+		F70525C22C230C8E0001D0D0 /* BBBook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F705256A2C230C8E0001D0D0 /* BBBook.cpp */; };
+		F70525C32C230C8E0001D0D0 /* ChessCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525842C230C8E0001D0D0 /* ChessCore.cpp */; };
+		F70525C42C230C8E0001D0D0 /* BPosition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525732C230C8E0001D0D0 /* BPosition.cpp */; };
+		F70525C52C230C8E0001D0D0 /* io.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F705258E2C230C8E0001D0D0 /* io.cpp */; };
+		F70525C62C230C8E0001D0D0 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = F70525632C230C8E0001D0D0 /* Makefile */; };
+		F70525C72C230C8E0001D0D0 /* MicroMaxBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525912C230C8E0001D0D0 /* MicroMaxBridge.cpp */; };
+		F70525C82C230C8E0001D0D0 /* MicroMaxBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70525B82C230C8E0001D0D0 /* MicroMaxBridge.swift */; };
+		F70525C92C230C8E0001D0D0 /* PThreadStaticLinker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525962C230C8E0001D0D0 /* PThreadStaticLinker.cpp */; };
+		F70525CA2C230C8E0001D0D0 /* BMovegen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525702C230C8E0001D0D0 /* BMovegen.cpp */; };
+		F70525CB2C230C8E0001D0D0 /* UnixListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F705259E2C230C8E0001D0D0 /* UnixListener.cpp */; };
+		F70525CC2C230C8E0001D0D0 /* BBitboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F705256C2C230C8E0001D0D0 /* BBitboard.cpp */; };
+		F70525CD2C230C8E0001D0D0 /* UnixAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F705259C2C230C8E0001D0D0 /* UnixAdapter.cpp */; };
+		F70525CE2C230C8E0001D0D0 /* Fairymax.c in Sources */ = {isa = PBXBuildFile; fileRef = F70525622C230C8E0001D0D0 /* Fairymax.c */; };
+		F70525CF2C230C8E0001D0D0 /* VirtualBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525A32C230C8E0001D0D0 /* VirtualBoard.cpp */; };
+		F70525D02C230C8E0001D0D0 /* MicroMaxObjCBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = F70525B52C230C8E0001D0D0 /* MicroMaxObjCBridge.mm */; };
+		F70525D12C230C8E0001D0D0 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70525B92C230C8E0001D0D0 /* Types.swift */; };
+		F70525D22C230C8E0001D0D0 /* AbstractAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F705257D2C230C8E0001D0D0 /* AbstractAdapter.cpp */; };
+		F70525D32C230C8E0001D0D0 /* ProtocolParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525942C230C8E0001D0D0 /* ProtocolParser.cpp */; };
+		F70525D42C230C8E0001D0D0 /* EngineContext.m in Sources */ = {isa = PBXBuildFile; fileRef = F70525B32C230C8E0001D0D0 /* EngineContext.m */; };
+		F70525D62C230C8E0001D0D0 /* engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F705258B2C230C8E0001D0D0 /* engine.cpp */; };
+		F70525D72C230C8E0001D0D0 /* WBProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525AD2C230C8E0001D0D0 /* WBProtocol.cpp */; };
+		F70525D82C230C8E0001D0D0 /* WBProtocolParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525AF2C230C8E0001D0D0 /* WBProtocolParser.cpp */; };
+		F70525D92C230C8E0001D0D0 /* EngineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = F70525682C230C8E0001D0D0 /* EngineContext.c */; };
+		F70525DA2C230C8E0001D0D0 /* Resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F70525972C230C8E0001D0D0 /* Resources.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F70524C62C22C9D20001D0D0 /* MicroMaxTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MicroMaxTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F70524C92C22C9D20001D0D0 /* MicroMaxTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroMaxTestApp.swift; sourceTree = "<group>"; };
+		F70524CB2C22C9D20001D0D0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F70524CD2C22C9D30001D0D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F70524CF2C22C9D30001D0D0 /* MicroMaxTestApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MicroMaxTestApp.entitlements; sourceTree = "<group>"; };
+		F70524D12C22C9D30001D0D0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F70525592C22CD9C0001D0D0 /* MicroMaxObjCBridge */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MicroMaxObjCBridge; sourceTree = "<group>"; };
+		F705255F2C230C8E0001D0D0 /* changelog */ = {isa = PBXFileReference; lastKnownFileType = text; path = changelog; sourceTree = "<group>"; };
+		F70525602C230C8E0001D0D0 /* copyright */ = {isa = PBXFileReference; lastKnownFileType = text; path = copyright; sourceTree = "<group>"; };
+		F70525612C230C8E0001D0D0 /* fairymax.pod */ = {isa = PBXFileReference; lastKnownFileType = text; path = fairymax.pod; sourceTree = "<group>"; };
+		F70525622C230C8E0001D0D0 /* Fairymax.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Fairymax.c; sourceTree = "<group>"; };
+		F70525632C230C8E0001D0D0 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		F70525642C230C8E0001D0D0 /* md5sums */ = {isa = PBXFileReference; lastKnownFileType = text; path = md5sums; sourceTree = "<group>"; };
+		F70525652C230C8E0001D0D0 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		F70525682C230C8E0001D0D0 /* EngineContext.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = EngineContext.c; sourceTree = "<group>"; };
+		F705256A2C230C8E0001D0D0 /* BBBook.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BBBook.cpp; sourceTree = "<group>"; };
+		F705256B2C230C8E0001D0D0 /* BBitboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBitboard.h; sourceTree = "<group>"; };
+		F705256C2C230C8E0001D0D0 /* BBitboard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BBitboard.cpp; sourceTree = "<group>"; };
+		F705256D2C230C8E0001D0D0 /* BBitcount.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBitcount.h; sourceTree = "<group>"; };
+		F705256E2C230C8E0001D0D0 /* BBook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBook.h; sourceTree = "<group>"; };
+		F705256F2C230C8E0001D0D0 /* BMove.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMove.h; sourceTree = "<group>"; };
+		F70525702C230C8E0001D0D0 /* BMovegen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BMovegen.cpp; sourceTree = "<group>"; };
+		F70525712C230C8E0001D0D0 /* BMoveGen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMoveGen.h; sourceTree = "<group>"; };
+		F70525722C230C8E0001D0D0 /* BPosition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPosition.h; sourceTree = "<group>"; };
+		F70525732C230C8E0001D0D0 /* BPosition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BPosition.cpp; sourceTree = "<group>"; };
+		F70525742C230C8E0001D0D0 /* BPsqtab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BPsqtab.h; sourceTree = "<group>"; };
+		F70525752C230C8E0001D0D0 /* BRkiss.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRkiss.h; sourceTree = "<group>"; };
+		F70525762C230C8E0001D0D0 /* BTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BTypes.h; sourceTree = "<group>"; };
+		F70525782C230C8E0001D0D0 /* ChessCore.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChessCore.hpp; sourceTree = "<group>"; };
+		F70525792C230C8E0001D0D0 /* ProtocolReceiver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProtocolReceiver.hpp; sourceTree = "<group>"; };
+		F705257A2C230C8E0001D0D0 /* Resources.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Resources.hpp; sourceTree = "<group>"; };
+		F705257C2C230C8E0001D0D0 /* AbstractAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AbstractAdapter.hpp; sourceTree = "<group>"; };
+		F705257D2C230C8E0001D0D0 /* AbstractAdapter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AbstractAdapter.cpp; sourceTree = "<group>"; };
+		F705257E2C230C8E0001D0D0 /* AbstractProtocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AbstractProtocol.hpp; sourceTree = "<group>"; };
+		F705257F2C230C8E0001D0D0 /* Adapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Adapter.hpp; sourceTree = "<group>"; };
+		F70525802C230C8E0001D0D0 /* AdapterReceiver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AdapterReceiver.hpp; sourceTree = "<group>"; };
+		F70525812C230C8E0001D0D0 /* BoardConverter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BoardConverter.hpp; sourceTree = "<group>"; };
+		F70525822C230C8E0001D0D0 /* BoardCoord.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BoardCoord.hpp; sourceTree = "<group>"; };
+		F70525832C230C8E0001D0D0 /* BoardDefinition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BoardDefinition.hpp; sourceTree = "<group>"; };
+		F70525842C230C8E0001D0D0 /* ChessCore.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ChessCore.cpp; sourceTree = "<group>"; };
+		F70525852C230C8E0001D0D0 /* ChessNotation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChessNotation.hpp; sourceTree = "<group>"; };
+		F70525862C230C8E0001D0D0 /* ChessPosition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ChessPosition.hpp; sourceTree = "<group>"; };
+		F70525872C230C8E0001D0D0 /* Core.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Core.hpp; sourceTree = "<group>"; };
+		F70525882C230C8E0001D0D0 /* CoreReceiver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CoreReceiver.hpp; sourceTree = "<group>"; };
+		F70525892C230C8E0001D0D0 /* CoreResponder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CoreResponder.hpp; sourceTree = "<group>"; };
+		F705258A2C230C8E0001D0D0 /* engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = engine.h; sourceTree = "<group>"; };
+		F705258B2C230C8E0001D0D0 /* engine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = engine.cpp; sourceTree = "<group>"; };
+		F705258C2C230C8E0001D0D0 /* FENParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FENParser.hpp; sourceTree = "<group>"; };
+		F705258D2C230C8E0001D0D0 /* io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
+		F705258E2C230C8E0001D0D0 /* io.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = io.cpp; sourceTree = "<group>"; };
+		F705258F2C230C8E0001D0D0 /* Linker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Linker.hpp; sourceTree = "<group>"; };
+		F70525902C230C8E0001D0D0 /* Listener.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Listener.hpp; sourceTree = "<group>"; };
+		F70525912C230C8E0001D0D0 /* MicroMaxBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MicroMaxBridge.cpp; sourceTree = "<group>"; };
+		F70525922C230C8E0001D0D0 /* Protocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Protocol.hpp; sourceTree = "<group>"; };
+		F70525932C230C8E0001D0D0 /* ProtocolParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProtocolParser.hpp; sourceTree = "<group>"; };
+		F70525942C230C8E0001D0D0 /* ProtocolParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolParser.cpp; sourceTree = "<group>"; };
+		F70525952C230C8E0001D0D0 /* PThreadStaticLinker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PThreadStaticLinker.hpp; sourceTree = "<group>"; };
+		F70525962C230C8E0001D0D0 /* PThreadStaticLinker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PThreadStaticLinker.cpp; sourceTree = "<group>"; };
+		F70525972C230C8E0001D0D0 /* Resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Resources.cpp; sourceTree = "<group>"; };
+		F70525982C230C8E0001D0D0 /* RunLoop.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RunLoop.hpp; sourceTree = "<group>"; };
+		F70525992C230C8E0001D0D0 /* StaticLinker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StaticLinker.hpp; sourceTree = "<group>"; };
+		F705259A2C230C8E0001D0D0 /* Types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Types.hpp; sourceTree = "<group>"; };
+		F705259B2C230C8E0001D0D0 /* UnixAdapter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UnixAdapter.hpp; sourceTree = "<group>"; };
+		F705259C2C230C8E0001D0D0 /* UnixAdapter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnixAdapter.cpp; sourceTree = "<group>"; };
+		F705259D2C230C8E0001D0D0 /* UnixListener.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UnixListener.hpp; sourceTree = "<group>"; };
+		F705259E2C230C8E0001D0D0 /* UnixListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnixListener.cpp; sourceTree = "<group>"; };
+		F705259F2C230C8E0001D0D0 /* Validation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Validation.hpp; sourceTree = "<group>"; };
+		F70525A02C230C8E0001D0D0 /* VirtualAtom.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualAtom.hpp; sourceTree = "<group>"; };
+		F70525A12C230C8E0001D0D0 /* VirtualAtomFactory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualAtomFactory.hpp; sourceTree = "<group>"; };
+		F70525A22C230C8E0001D0D0 /* VirtualBoard.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualBoard.hpp; sourceTree = "<group>"; };
+		F70525A32C230C8E0001D0D0 /* VirtualBoard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualBoard.cpp; sourceTree = "<group>"; };
+		F70525A42C230C8E0001D0D0 /* VirtualBoardState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualBoardState.hpp; sourceTree = "<group>"; };
+		F70525A52C230C8E0001D0D0 /* VirtualMove.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMove.hpp; sourceTree = "<group>"; };
+		F70525A62C230C8E0001D0D0 /* VirtualMovement.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualMovement.hpp; sourceTree = "<group>"; };
+		F70525A72C230C8E0001D0D0 /* VirtualNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualNode.hpp; sourceTree = "<group>"; };
+		F70525A82C230C8E0001D0D0 /* VirtualPieceConverter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualPieceConverter.hpp; sourceTree = "<group>"; };
+		F70525A92C230C8E0001D0D0 /* VirtualResponder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualResponder.hpp; sourceTree = "<group>"; };
+		F70525AA2C230C8E0001D0D0 /* VirtualSquare.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualSquare.hpp; sourceTree = "<group>"; };
+		F70525AB2C230C8E0001D0D0 /* VirtualState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VirtualState.hpp; sourceTree = "<group>"; };
+		F70525AC2C230C8E0001D0D0 /* WBProtocol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WBProtocol.hpp; sourceTree = "<group>"; };
+		F70525AD2C230C8E0001D0D0 /* WBProtocol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WBProtocol.cpp; sourceTree = "<group>"; };
+		F70525AE2C230C8E0001D0D0 /* WBProtocolParser.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = WBProtocolParser.hpp; sourceTree = "<group>"; };
+		F70525AF2C230C8E0001D0D0 /* WBProtocolParser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WBProtocolParser.cpp; sourceTree = "<group>"; };
+		F70525B12C230C8E0001D0D0 /* MicroMaxObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MicroMaxObjCBridge.h; sourceTree = "<group>"; };
+		F70525B32C230C8E0001D0D0 /* EngineContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineContext.m; sourceTree = "<group>"; };
+		F70525B42C230C8E0001D0D0 /* fmax.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = fmax.ini; sourceTree = "<group>"; };
+		F70525B52C230C8E0001D0D0 /* MicroMaxObjCBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MicroMaxObjCBridge.mm; sourceTree = "<group>"; };
+		F70525B82C230C8E0001D0D0 /* MicroMaxBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroMaxBridge.swift; sourceTree = "<group>"; };
+		F70525B92C230C8E0001D0D0 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F70524C32C22C9D20001D0D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F70525582C22CD3D0001D0D0 /* Asyncify in Frameworks */,
+				F705255C2C22CDEF0001D0D0 /* MicroMaxObjCBridge in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F70524BD2C22C9D20001D0D0 = {
+			isa = PBXGroup;
+			children = (
+				F70525BB2C230C8E0001D0D0 /* MicroMaxOnAppleSilicon */,
+				F70524C82C22C9D20001D0D0 /* MicroMaxTestApp */,
+				F70524C72C22C9D20001D0D0 /* Products */,
+				F705255A2C22CDEF0001D0D0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F70524C72C22C9D20001D0D0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F70524C62C22C9D20001D0D0 /* MicroMaxTestApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F70524C82C22C9D20001D0D0 /* MicroMaxTestApp */ = {
+			isa = PBXGroup;
+			children = (
+				F70524C92C22C9D20001D0D0 /* MicroMaxTestApp.swift */,
+				F70524CB2C22C9D20001D0D0 /* ContentView.swift */,
+				F70524CD2C22C9D30001D0D0 /* Assets.xcassets */,
+				F70524CF2C22C9D30001D0D0 /* MicroMaxTestApp.entitlements */,
+				F70524D02C22C9D30001D0D0 /* Preview Content */,
+				F70525592C22CD9C0001D0D0 /* MicroMaxObjCBridge */,
+			);
+			path = MicroMaxTestApp;
+			sourceTree = "<group>";
+		};
+		F70524D02C22C9D30001D0D0 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F70524D12C22C9D30001D0D0 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F705255A2C22CDEF0001D0D0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F70525662C230C8E0001D0D0 /* Fairymax */ = {
+			isa = PBXGroup;
+			children = (
+				F705255F2C230C8E0001D0D0 /* changelog */,
+				F70525602C230C8E0001D0D0 /* copyright */,
+				F70525612C230C8E0001D0D0 /* fairymax.pod */,
+				F70525622C230C8E0001D0D0 /* Fairymax.c */,
+				F70525632C230C8E0001D0D0 /* Makefile */,
+				F70525642C230C8E0001D0D0 /* md5sums */,
+				F70525652C230C8E0001D0D0 /* README */,
+			);
+			path = Fairymax;
+			sourceTree = "<group>";
+		};
+		F70525672C230C8E0001D0D0 /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		F70525692C230C8E0001D0D0 /* CBridge */ = {
+			isa = PBXGroup;
+			children = (
+				F70525662C230C8E0001D0D0 /* Fairymax */,
+				F70525672C230C8E0001D0D0 /* include */,
+				F70525682C230C8E0001D0D0 /* EngineContext.c */,
+			);
+			path = CBridge;
+			sourceTree = "<group>";
+		};
+		F70525772C230C8E0001D0D0 /* Bitboard */ = {
+			isa = PBXGroup;
+			children = (
+				F705256A2C230C8E0001D0D0 /* BBBook.cpp */,
+				F705256B2C230C8E0001D0D0 /* BBitboard.h */,
+				F705256C2C230C8E0001D0D0 /* BBitboard.cpp */,
+				F705256D2C230C8E0001D0D0 /* BBitcount.h */,
+				F705256E2C230C8E0001D0D0 /* BBook.h */,
+				F705256F2C230C8E0001D0D0 /* BMove.h */,
+				F70525702C230C8E0001D0D0 /* BMovegen.cpp */,
+				F70525712C230C8E0001D0D0 /* BMoveGen.h */,
+				F70525722C230C8E0001D0D0 /* BPosition.h */,
+				F70525732C230C8E0001D0D0 /* BPosition.cpp */,
+				F70525742C230C8E0001D0D0 /* BPsqtab.h */,
+				F70525752C230C8E0001D0D0 /* BRkiss.h */,
+				F70525762C230C8E0001D0D0 /* BTypes.h */,
+			);
+			path = Bitboard;
+			sourceTree = "<group>";
+		};
+		F705257B2C230C8E0001D0D0 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F70525782C230C8E0001D0D0 /* ChessCore.hpp */,
+				F70525792C230C8E0001D0D0 /* ProtocolReceiver.hpp */,
+				F705257A2C230C8E0001D0D0 /* Resources.hpp */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		F70525B02C230C8E0001D0D0 /* CppBridge */ = {
+			isa = PBXGroup;
+			children = (
+				F70525772C230C8E0001D0D0 /* Bitboard */,
+				F705257B2C230C8E0001D0D0 /* include */,
+				F705257C2C230C8E0001D0D0 /* AbstractAdapter.hpp */,
+				F705257D2C230C8E0001D0D0 /* AbstractAdapter.cpp */,
+				F705257E2C230C8E0001D0D0 /* AbstractProtocol.hpp */,
+				F705257F2C230C8E0001D0D0 /* Adapter.hpp */,
+				F70525802C230C8E0001D0D0 /* AdapterReceiver.hpp */,
+				F70525812C230C8E0001D0D0 /* BoardConverter.hpp */,
+				F70525822C230C8E0001D0D0 /* BoardCoord.hpp */,
+				F70525832C230C8E0001D0D0 /* BoardDefinition.hpp */,
+				F70525842C230C8E0001D0D0 /* ChessCore.cpp */,
+				F70525852C230C8E0001D0D0 /* ChessNotation.hpp */,
+				F70525862C230C8E0001D0D0 /* ChessPosition.hpp */,
+				F70525872C230C8E0001D0D0 /* Core.hpp */,
+				F70525882C230C8E0001D0D0 /* CoreReceiver.hpp */,
+				F70525892C230C8E0001D0D0 /* CoreResponder.hpp */,
+				F705258A2C230C8E0001D0D0 /* engine.h */,
+				F705258B2C230C8E0001D0D0 /* engine.cpp */,
+				F705258C2C230C8E0001D0D0 /* FENParser.hpp */,
+				F705258D2C230C8E0001D0D0 /* io.h */,
+				F705258E2C230C8E0001D0D0 /* io.cpp */,
+				F705258F2C230C8E0001D0D0 /* Linker.hpp */,
+				F70525902C230C8E0001D0D0 /* Listener.hpp */,
+				F70525912C230C8E0001D0D0 /* MicroMaxBridge.cpp */,
+				F70525922C230C8E0001D0D0 /* Protocol.hpp */,
+				F70525932C230C8E0001D0D0 /* ProtocolParser.hpp */,
+				F70525942C230C8E0001D0D0 /* ProtocolParser.cpp */,
+				F70525952C230C8E0001D0D0 /* PThreadStaticLinker.hpp */,
+				F70525962C230C8E0001D0D0 /* PThreadStaticLinker.cpp */,
+				F70525972C230C8E0001D0D0 /* Resources.cpp */,
+				F70525982C230C8E0001D0D0 /* RunLoop.hpp */,
+				F70525992C230C8E0001D0D0 /* StaticLinker.hpp */,
+				F705259A2C230C8E0001D0D0 /* Types.hpp */,
+				F705259B2C230C8E0001D0D0 /* UnixAdapter.hpp */,
+				F705259C2C230C8E0001D0D0 /* UnixAdapter.cpp */,
+				F705259D2C230C8E0001D0D0 /* UnixListener.hpp */,
+				F705259E2C230C8E0001D0D0 /* UnixListener.cpp */,
+				F705259F2C230C8E0001D0D0 /* Validation.hpp */,
+				F70525A02C230C8E0001D0D0 /* VirtualAtom.hpp */,
+				F70525A12C230C8E0001D0D0 /* VirtualAtomFactory.hpp */,
+				F70525A22C230C8E0001D0D0 /* VirtualBoard.hpp */,
+				F70525A32C230C8E0001D0D0 /* VirtualBoard.cpp */,
+				F70525A42C230C8E0001D0D0 /* VirtualBoardState.hpp */,
+				F70525A52C230C8E0001D0D0 /* VirtualMove.hpp */,
+				F70525A62C230C8E0001D0D0 /* VirtualMovement.hpp */,
+				F70525A72C230C8E0001D0D0 /* VirtualNode.hpp */,
+				F70525A82C230C8E0001D0D0 /* VirtualPieceConverter.hpp */,
+				F70525A92C230C8E0001D0D0 /* VirtualResponder.hpp */,
+				F70525AA2C230C8E0001D0D0 /* VirtualSquare.hpp */,
+				F70525AB2C230C8E0001D0D0 /* VirtualState.hpp */,
+				F70525AC2C230C8E0001D0D0 /* WBProtocol.hpp */,
+				F70525AD2C230C8E0001D0D0 /* WBProtocol.cpp */,
+				F70525AE2C230C8E0001D0D0 /* WBProtocolParser.hpp */,
+				F70525AF2C230C8E0001D0D0 /* WBProtocolParser.cpp */,
+			);
+			path = CppBridge;
+			sourceTree = "<group>";
+		};
+		F70525B22C230C8E0001D0D0 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F70525B12C230C8E0001D0D0 /* MicroMaxObjCBridge.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		F70525B62C230C8E0001D0D0 /* ObjCBridge */ = {
+			isa = PBXGroup;
+			children = (
+				F70525B22C230C8E0001D0D0 /* include */,
+				F70525B32C230C8E0001D0D0 /* EngineContext.m */,
+				F70525B42C230C8E0001D0D0 /* fmax.ini */,
+				F70525B52C230C8E0001D0D0 /* MicroMaxObjCBridge.mm */,
+			);
+			path = ObjCBridge;
+			sourceTree = "<group>";
+		};
+		F70525BA2C230C8E0001D0D0 /* SwiftBridge */ = {
+			isa = PBXGroup;
+			children = (
+				F70525B82C230C8E0001D0D0 /* MicroMaxBridge.swift */,
+				F70525B92C230C8E0001D0D0 /* Types.swift */,
+			);
+			path = SwiftBridge;
+			sourceTree = "<group>";
+		};
+		F70525BB2C230C8E0001D0D0 /* MicroMaxOnAppleSilicon */ = {
+			isa = PBXGroup;
+			children = (
+				F70525692C230C8E0001D0D0 /* CBridge */,
+				F70525B02C230C8E0001D0D0 /* CppBridge */,
+				F70525B62C230C8E0001D0D0 /* ObjCBridge */,
+				F70525BA2C230C8E0001D0D0 /* SwiftBridge */,
+			);
+			name = MicroMaxOnAppleSilicon;
+			path = ../MicroMaxOnAppleSilicon;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F70524C52C22C9D20001D0D0 /* MicroMaxTestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F70524D52C22C9D30001D0D0 /* Build configuration list for PBXNativeTarget "MicroMaxTestApp" */;
+			buildPhases = (
+				F70524C22C22C9D20001D0D0 /* Sources */,
+				F70524C32C22C9D20001D0D0 /* Frameworks */,
+				F70524C42C22C9D20001D0D0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MicroMaxTestApp;
+			packageProductDependencies = (
+				F70525572C22CD3D0001D0D0 /* Asyncify */,
+				F705255B2C22CDEF0001D0D0 /* MicroMaxObjCBridge */,
+			);
+			productName = MicroMaxTestApp;
+			productReference = F70524C62C22C9D20001D0D0 /* MicroMaxTestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F70524BE2C22C9D20001D0D0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					F70524C52C22C9D20001D0D0 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = F70524C12C22C9D20001D0D0 /* Build configuration list for PBXProject "MicroMaxTestApp" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F70524BD2C22C9D20001D0D0;
+			packageReferences = (
+				F70525562C22CD3D0001D0D0 /* XCRemoteSwiftPackageReference "Asyncify" */,
+			);
+			productRefGroup = F70524C72C22C9D20001D0D0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F70524C52C22C9D20001D0D0 /* MicroMaxTestApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F70524C42C22C9D20001D0D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F70524D22C22C9D30001D0D0 /* Preview Assets.xcassets in Resources */,
+				F70524CE2C22C9D30001D0D0 /* Assets.xcassets in Resources */,
+				F70525BC2C230C8E0001D0D0 /* copyright in Resources */,
+				F70525BD2C230C8E0001D0D0 /* changelog in Resources */,
+				F70525BE2C230C8E0001D0D0 /* fmax.ini in Resources */,
+				F70525BF2C230C8E0001D0D0 /* md5sums in Resources */,
+				F70525C02C230C8E0001D0D0 /* fairymax.pod in Resources */,
+				F70525C12C230C8E0001D0D0 /* README in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F70524C22C22C9D20001D0D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F70524CC2C22C9D20001D0D0 /* ContentView.swift in Sources */,
+				F70524CA2C22C9D20001D0D0 /* MicroMaxTestApp.swift in Sources */,
+				F70525C22C230C8E0001D0D0 /* BBBook.cpp in Sources */,
+				F70525C32C230C8E0001D0D0 /* ChessCore.cpp in Sources */,
+				F70525C42C230C8E0001D0D0 /* BPosition.cpp in Sources */,
+				F70525C52C230C8E0001D0D0 /* io.cpp in Sources */,
+				F70525C62C230C8E0001D0D0 /* Makefile in Sources */,
+				F70525C72C230C8E0001D0D0 /* MicroMaxBridge.cpp in Sources */,
+				F70525C82C230C8E0001D0D0 /* MicroMaxBridge.swift in Sources */,
+				F70525C92C230C8E0001D0D0 /* PThreadStaticLinker.cpp in Sources */,
+				F70525CA2C230C8E0001D0D0 /* BMovegen.cpp in Sources */,
+				F70525CB2C230C8E0001D0D0 /* UnixListener.cpp in Sources */,
+				F70525CC2C230C8E0001D0D0 /* BBitboard.cpp in Sources */,
+				F70525CD2C230C8E0001D0D0 /* UnixAdapter.cpp in Sources */,
+				F70525CE2C230C8E0001D0D0 /* Fairymax.c in Sources */,
+				F70525CF2C230C8E0001D0D0 /* VirtualBoard.cpp in Sources */,
+				F70525D02C230C8E0001D0D0 /* MicroMaxObjCBridge.mm in Sources */,
+				F70525D12C230C8E0001D0D0 /* Types.swift in Sources */,
+				F70525D22C230C8E0001D0D0 /* AbstractAdapter.cpp in Sources */,
+				F70525D32C230C8E0001D0D0 /* ProtocolParser.cpp in Sources */,
+				F70525D42C230C8E0001D0D0 /* EngineContext.m in Sources */,
+				F70525D62C230C8E0001D0D0 /* engine.cpp in Sources */,
+				F70525D72C230C8E0001D0D0 /* WBProtocol.cpp in Sources */,
+				F70525D82C230C8E0001D0D0 /* WBProtocolParser.cpp in Sources */,
+				F70525D92C230C8E0001D0D0 /* EngineContext.c in Sources */,
+				F70525DA2C230C8E0001D0D0 /* Resources.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F70524D32C22C9D30001D0D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F70524D42C22C9D30001D0D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		F70524D62C22C9D30001D0D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MicroMaxTestApp/MicroMaxTestApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MicroMaxTestApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 8ZRM3D7KC6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mesqueeb.MicroMaxTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = ../MicroMaxOnAppleSilicon/ObjCBridge/include/MicroMaxObjCBridge.h;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.2;
+			};
+			name = Debug;
+		};
+		F70524D72C22C9D30001D0D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MicroMaxTestApp/MicroMaxTestApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MicroMaxTestApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 8ZRM3D7KC6;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = mesqueeb.MicroMaxTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = ../MicroMaxOnAppleSilicon/ObjCBridge/include/MicroMaxObjCBridge.h;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F70524C12C22C9D20001D0D0 /* Build configuration list for PBXProject "MicroMaxTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F70524D32C22C9D30001D0D0 /* Debug */,
+				F70524D42C22C9D30001D0D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F70524D52C22C9D30001D0D0 /* Build configuration list for PBXNativeTarget "MicroMaxTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F70524D62C22C9D30001D0D0 /* Debug */,
+				F70524D72C22C9D30001D0D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F70525562C22CD3D0001D0D0 /* XCRemoteSwiftPackageReference "Asyncify" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mesqueeb/Asyncify.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F70525572C22CD3D0001D0D0 /* Asyncify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F70525562C22CD3D0001D0D0 /* XCRemoteSwiftPackageReference "Asyncify" */;
+			productName = Asyncify;
+		};
+		F705255B2C22CDEF0001D0D0 /* MicroMaxObjCBridge */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MicroMaxObjCBridge;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = F70524BE2C22C9D20001D0D0 /* Project object */;
+}

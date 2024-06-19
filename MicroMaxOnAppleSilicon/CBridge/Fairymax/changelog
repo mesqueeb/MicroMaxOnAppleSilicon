@@ -1,0 +1,103 @@
+/***************************************************************************/
+/* micro-Max version 4.8 (~1950 characters) features:                      */
+/* - recursive negamax search                                              */
+/* - all-capture quiescence search with MVV/LVA priority                   */
+/* - (internal) iterative deepening                                        */
+/* - best-move-first 'sorting'                                             */
+/* - a hash table storing score and best move                              */
+/* - futility pruning                                                      */
+/* - king safety through magnetic frozen king                              */
+/* - null-move pruning                                                     */
+/* - Late-move reductions                                                  */
+/* - full FIDE rules (expt minor promotion) and move-legality checking     */
+/* - keep hash + rep-draw detect                                           */
+/* - end-game Pawn-push bonus, new piece values, gradual promotion         */
+/***************************************************************************/
+/* The Fairy-Max version reads the piece description from a file fmax.ini  */
+/* The format supports many fairy pieces, including hoppers.               */
+/* f) now supports 15 piece types, by requisitioning WHITE bit             */
+/* g) supports larger board width.                                         */
+/* h) castling bug ('in-check by non-captures') corrected                  */
+/* i) rep-draw bug ('side-to-move') corrected                              */
+/* k) allow user underpromotions, recognize & ignore 'variant' command     */
+/* l) edit bug corrected (i & j file clear)                                */
+/* m) piece values no longer quantized, game-stage counting bug corrected  */
+/* n) edit-menu K-side castling bug corrected.                             */
+/* o) retrieve the requested variant from the .ini file                    */
+/* p) clear hash table on variant switch                                   */
+/* q) reduced piece-material count for better Pawn push                    */
+/* r) hash-table bug corrected (X still ORed with flags)                   */
+/* s) Bug that prevented initialization center points corrected            */
+/* t) castling bug after edit fixed                                        */
+/* u) converted to protocol 2; ping implemented                            */
+/* v) white e.p. rights hash bug fixed;                                    */
+/* w) piece indicators programable, multi-path support                     */
+/* x) e.p. changed to support Berolina Pawns                               */
+/* y) capture value of 6-7th-rank Pawn reduced in Shatranj                 */
+/* z) bug in promotion input corrected                                     */
+/* A) stalemate-detection bug in printResult fixed                         */
+/* B) Invalidate hash on game-level promotion (might be under-promotion!)  */
+/* C) King move evaluation based on negative piece value in stead of nr    */
+/* D) WB memory command added, undo fixed                                  */
+/* E) 15th piece read in                                                   */
+/* F) accepts ini fileargument                                             */
+/* G) bug in calculation ASCII promotion character fixed                   */
+/* H) unified normal and shatranj source                                   */
+/* J) rewrite under-promotion code, fixes persistent bug there             */
+/* K) o[] and oo[] made int to make fairymax work on big-endian machines   */
+/* L) added Resign option feature (using new WB protocol)                  */
+/* M) char -> signed char for better portability                           */
+/* N) add PV printing and multi-PV support                                 */
+/* O) non-Rook castling, 6th-rank promotion, independent B/W piece naming  */
+/***************************************************************************/
+
+4/6/2009 Unified source of ShaMax and Fairy-Max into single fmax.c file, and
+         created this ChangeLog from the until then self-documenting source.
+
+6/2/2009 Promotion code rewitten to not refer to default piece characters.
+
+9/3/2009 Fixed big-endian bug in reading inifile (char with int format),
+         and added some option features to make Fairy-Max useful as test
+         engine for GUIs that want to implement the WB protocol extensions.
+
+9/16/2009 Made signedness of char in AI explicit
+
+27/12/2009 Added PV updating through the triangular-array method. Also added
+           a multi-PV option to print lines within a certain sccore margin.
+
+15/1/2010 Improved Makefile, updated docs
+          Implement independent naming of white and black pieces. (So mirror-
+          image pieces can use same letter.) 
+          Change castling code to allow castling with any corner piece type.
+          Implement 6th-rank promotion based on 'Queen' value.
+          Makruk added as new variant to the fmax.ini file.
+
+16/1/2010 Fixed bug in Shatranj result claims.
+          Flip eval sign when side-to-move changes through WB color command.
+          
+17/1/2010 Removed Shatranj stalemate claim again, as it was never triggered.
+
+1/11/2010 Implement counting of pieces, and extinction win condition.
+          Add engine option to allow subdivision of variant fairy.
+          Add FIDE vs Nutty Knights as variant fairy/FIDE-Nutters
+          Allow white and black to promote to a different piece type.
+
+2/11/2010 Implement duple-check rule.
+          Add Spartan Chess as variant to fmax.ini.
+          Update docs.
+
+1/12/2010 Version 4.8Q, implementing a reverse setup command for sending
+          pieceToCharTable and initial position to the GUI, sub-specification
+          of variant fairy through an engine-defined option, allowing Seirawan-
+          type gating moves in search. Seirawan Chess is added as new variant,
+          pluss several new combinations of Chess with different armies
+
+7/10/2011 Version 4.8R, keeping better track of which pieces are virgin in a
+          setup position, and have a better distinction between use of the '4'
+          move-rights code between an initial double-step jump without e.p.
+          rights (as could so far only be used for Pawns, as the Spartan
+          Hoplite), and castlings. As a result even royal pieces can now get
+          an initial double-step other than castling, which has been used to
+          implement Cambodian Chess as a sub-variant of Makruk (selected
+          through a new option). Falcon Chess was added as a new variant.
+

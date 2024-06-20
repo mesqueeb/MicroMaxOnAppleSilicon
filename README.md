@@ -40,12 +40,12 @@ bridge.connectToEngine()
 let fenState: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 do {
-	let (from, to) = try await bridge.requestAiMove(fenState: inputText)
-	guard let from, let to else { throw fatalError("no result") }
+  let (from, to) = try await bridge.requestAiMove(fenState: inputText)
+  guard let from, let to else { throw fatalError("no result") }
 
   print("MicroMax moves from \(from) to \(to)") // Eg. from "B7" to "B6"
 } catch {
-	print("something went wrong... error:", error)
+  print("something went wrong... error:", error)
 }
 ```
 
@@ -57,4 +57,6 @@ There is a sample Xcode project provided as part of the repo that you reference 
 
 # Other Projects
 
-Also check out Fuego on Apple Silicon ⚫️⚪️ at [github.com/mesqueeb/FuegoOnAppleSilicon](https://github.com/mesqueeb/FuegoOnAppleSilicon), the Fuego Go engine wrapped for Apple Silicon.
+Also check out Fuego on Apple Silicon ⚫️⚪️, the Fuego Go engine wrapped for Apple Silicon.
+
+→ [github.com/mesqueeb/FuegoOnAppleSilicon](https://github.com/mesqueeb/FuegoOnAppleSilicon)

@@ -1,3 +1,4 @@
+import MicroMaxOnAppleSilicon
 import SwiftUI
 
 func print(_ messages: Any...) {

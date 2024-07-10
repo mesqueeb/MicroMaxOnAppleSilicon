@@ -2,6 +2,9 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 import PackageDescription
 
+/// This `Package.swift` exists to be able to import the package in an Xcode project in the same repository.
+///
+/// Compared to the repository root `Package.swift`, everything is the same but the target paths.
 let package = Package(
   name: "MicroMaxOnAppleSilicon",
   platforms: [.iOS(.v14), .macOS(.v11)],
@@ -17,31 +20,31 @@ let package = Package(
   targets: [
     .target(
       name: "MicroMaxCBridge",
-      path: "MicroMaxOnAppleSilicon/Sources/CBridge"
+      path: "Sources/CBridge"
     ),
     .target(
       name: "MicroMaxCppBridge",
       dependencies: ["MicroMaxCBridge"],
-      path: "MicroMaxOnAppleSilicon/Sources/CppBridge"
+      path: "Sources/CppBridge"
     ),
     .target(
       name: "MicroMaxObjCBridge",
       dependencies: ["MicroMaxCppBridge"],
-      path: "MicroMaxOnAppleSilicon/Sources/ObjCBridge",
+      path: "Sources/ObjCBridge",
       resources: [.copy("fmax.ini")],
       publicHeadersPath: "include"
     ),
     .target(
       name: "MicroMaxOnAppleSilicon",
       dependencies: ["Asyncify", "MicroMaxObjCBridge"],
-      path: "MicroMaxOnAppleSilicon/Sources/SwiftBridge"
+      path: "Sources/SwiftBridge"
     ),
     .testTarget(
       name: "MicroMaxOnAppleSiliconTests",
       dependencies: ["MicroMaxCBridge", "MicroMaxCppBridge", "MicroMaxObjCBridge", "MicroMaxOnAppleSilicon"],
-      path: "MicroMaxOnAppleSilicon/Tests",
+      path: "Tests",
       resources: [.copy("fmax.ini")]
-    ),
+    )
   ],
   cLanguageStandard: .gnu17,
   cxxLanguageStandard: .cxx20

@@ -15,7 +15,7 @@ let package = Package(
     ),
   ],
   dependencies: [
-    .package(url: "https://github.com/mesqueeb/Asyncify", from: "0.0.4"),
+    .package(url: "https://github.com/mesqueeb/Asyncify", from: "0.0.9"),
   ],
   targets: [
     .target(

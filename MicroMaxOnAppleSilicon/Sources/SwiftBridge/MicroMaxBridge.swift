@@ -30,7 +30,7 @@ public enum GameStatus: String, Sendable {
   }
 }
 
-public class MicroMaxBridge {
+public actor MicroMaxBridge {
   private let bridge: MicroMaxObjCBridge
 
   public init() {
@@ -59,17 +59,7 @@ public class MicroMaxBridge {
     )
   }
 
-  private static var aiMoveConverterKey: UInt8 = 0
-
-  private var aiMoveConverter: Asyncify<MoveResultObjC> {
-    if let converter = objc_getAssociatedObject(self, &MicroMaxBridge.aiMoveConverterKey) as? Asyncify<MoveResultObjC> {
-      return converter
-    } else {
-      let converter = Asyncify<MoveResultObjC>()
-      objc_setAssociatedObject(self, &MicroMaxBridge.aiMoveConverterKey, converter, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-      return converter
-    }
-  }
+  private let asyncify = Asyncify<MoveResultObjC>()
 
   /// Returns the file and rank with a 0 index
   public func requestAiMove(fenState: String) async throws -> MoveResult {
@@ -77,7 +67,7 @@ public class MicroMaxBridge {
     // continuation.resume(throwing: error)
     // continuation.resume(throwing: NSError(domain: "UnknownError", code: -1, userInfo: nil))
 
-    let (src, dest) = try await aiMoveConverter.performOperation { completion in
+    let (src, dest) = try await asyncify.performOperation { [self] completion in
       self.bridge.receiveMove = { srcFile, srcRank, dstFile, dstRank, _ in
         let result = (src: (file: Int32(srcFile), rank: Int32(srcRank)), dest: (file: Int32(dstFile), rank: Int32(dstRank)))
         completion(.success(result))

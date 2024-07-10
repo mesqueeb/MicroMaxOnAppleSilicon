@@ -28,7 +28,7 @@ let package = Package(
       name: "MicroMaxObjCBridge",
       dependencies: ["MicroMaxCppBridge"],
       path: "MicroMaxOnAppleSilicon/Sources/ObjCBridge",
-      resources: [.copy("fmax.ini")],
+      resources: [.copy("Resources/fmax.ini")],
       publicHeadersPath: "include"
     ),
     .target(
@@ -39,8 +39,7 @@ let package = Package(
     .testTarget(
       name: "MicroMaxOnAppleSiliconTests",
       dependencies: ["MicroMaxCBridge", "MicroMaxCppBridge", "MicroMaxObjCBridge", "MicroMaxOnAppleSilicon"],
-      path: "MicroMaxOnAppleSilicon/Tests",
-      resources: [.copy("fmax.ini")]
+      path: "MicroMaxOnAppleSilicon/Tests"
     ),
   ],
   cLanguageStandard: .gnu17,

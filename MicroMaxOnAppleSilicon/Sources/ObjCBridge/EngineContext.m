@@ -18,14 +18,25 @@ void getMicroMaxIni(char *ini) {
     
     /// If the path is `nil`, the `fmax.ini` file was not found
     if (!path) {
-        /// For Swift Tests we're going to look into one more spot
-        NSMutableString *bundlePathAsString = [[bundle bundlePath] mutableCopy];
-        [bundlePathAsString replaceOccurrencesOfString:@"/MicroMaxOnAppleSiliconPackageTests.xctest"
-                                            withString:@"/MicroMaxOnAppleSilicon_MicroMaxOnAppleSiliconTests.bundle"
-                                               options:NSBackwardsSearch
-                                                 range:NSMakeRange(0, [bundlePathAsString length])];
-        NSBundle *bundleSecondTry = [NSBundle bundleWithPath:bundlePathAsString];
-        path = [bundleSecondTry pathForResource:@"fmax" ofType:@"ini"];
+        /// For Swift Tests we're going to look into two more spots
+        NSMutableString *bundlePathAsString1 = [[bundle bundlePath] mutableCopy];
+      
+        /// First try appending
+        [bundlePathAsString1 appendString:@"/MicroMaxOnAppleSilicon_MicroMaxObjCBridge.bundle"];
+
+        NSBundle *bundleFirstTry = [NSBundle bundleWithPath:bundlePathAsString1];
+        path = [bundleFirstTry pathForResource:@"fmax" ofType:@"ini"];
+        
+        if (!path) {
+            /// Second try replacing
+            NSMutableString *bundlePathAsString2 = [[bundle bundlePath] mutableCopy];
+            [bundlePathAsString2 replaceOccurrencesOfString:@"/MicroMaxOnAppleSiliconPackageTests.xctest"
+                                                 withString:@"/MicroMaxOnAppleSilicon_MicroMaxObjCBridge.bundle"
+                                                    options:NSBackwardsSearch
+                                                      range:NSMakeRange(0, [bundlePathAsString2 length])];
+            NSBundle *bundleSecondTry = [NSBundle bundleWithPath:bundlePathAsString2];
+            path = [bundleSecondTry pathForResource:@"fmax" ofType:@"ini"];
+        }
     }
     /// If the path is `nil`, the `fmax.ini` file was not found
     if (path) {

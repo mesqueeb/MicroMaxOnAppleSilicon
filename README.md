@@ -55,6 +55,10 @@ The library comes with some useful types and helper functions, be sure to check 
 
 There is a sample Xcode project provided as part of the repo that you reference here: [MicroMaxTestApp](./MicroMaxTestApp/).
 
+### Documentation
+
+See the [documentation](https://swiftpackageindex.com/mesqueeb/MicroMaxOnAppleSilicon/documentation/micromaxonapplesilicon) for more info.
+
 # Other Projects
 
 Also check out Fuego on Apple Silicon ⚫️⚪️, the Fuego Go engine wrapped for Apple Silicon.

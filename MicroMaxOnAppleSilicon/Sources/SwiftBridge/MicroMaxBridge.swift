@@ -50,8 +50,6 @@ public class MicroMaxBridge {
   public func isMoveLegal(_ fenState: String, from: ChessBoardCoordinate, to: ChessBoardCoordinate) -> Bool {
     guard let src = coordinateToFileRank(from),
           let dest = coordinateToFileRank(to) else { return false }
-    print("src →", src)
-    print("dest →", dest)
     return bridge.isMoveLegal(
       fenState,
       srcFile: Int32(src.file),
@@ -91,6 +89,4 @@ public class MicroMaxBridge {
       to: fileRankToCoordinate(file: Int(dest.file), rank: Int(dest.rank))
     )
   }
-
-  
 }

@@ -15,11 +15,11 @@ struct ContentView: View {
   @State var bridge: MicroMaxBridge? = nil
 
   func doAiMove() {
-    Task.detached {
+    Task {
       guard let bridge else { return }
       do {
         let (from, to) = try await bridge.requestAiMove(fenState: inputText)
-        guard let from, let to else { throw fatalError("no result") }
+        guard let from, let to else { fatalError("no result") }
         aiMove = "from \(from) to \(to)"
         aiError = ""
       } catch {

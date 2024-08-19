@@ -1,6 +1,6 @@
 import Asyncify
 import Foundation
-import MicroMaxObjCBridge
+@preconcurrency import MicroMaxObjCBridge
 
 private typealias MoveResultObjC = (src: (file: Int32, rank: Int32), dest: (file: Int32, rank: Int32))
 public typealias MoveResult = (from: ChessBoardCoordinate?, to: ChessBoardCoordinate?)
@@ -31,7 +31,7 @@ public enum GameStatus: String, Sendable {
 }
 
 public actor MicroMaxBridge {
-  private let bridge: MicroMaxObjCBridge
+  private nonisolated(unsafe) let bridge: MicroMaxObjCBridge
 
   public init() {
     bridge = MicroMaxObjCBridge()

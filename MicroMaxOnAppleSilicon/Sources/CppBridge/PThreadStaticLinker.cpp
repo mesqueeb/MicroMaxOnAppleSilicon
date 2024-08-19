@@ -66,7 +66,8 @@ static void* engine_thread(void * data)
     argv[0] = (char *) malloc(4 * sizeof(char));
 
     // Convert int to char *
-    sprintf(argv[0], "%d", (int) (size_t) data);
+    // Convert int to char *, ensuring we don't write more than the buffer can hold
+    snprintf(argv[0], 4, "%d", (int) (size_t) data);
 
     try
     {

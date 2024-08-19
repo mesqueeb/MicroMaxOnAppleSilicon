@@ -60,7 +60,7 @@ void WBProtocol::update(unsigned srcFile, unsigned srcRank, unsigned dstFile, un
     if (_state != IgnoreUpdateState)
     {
         char buffer[6];
-        convertCoordToStr(buffer, srcFile, srcRank, dstFile, dstRank, promote);
+        convertCoordToStr(buffer, sizeof(buffer), srcFile, srcRank, dstFile, dstRank, promote);
         _adapter->write(buffer);
     }
 }

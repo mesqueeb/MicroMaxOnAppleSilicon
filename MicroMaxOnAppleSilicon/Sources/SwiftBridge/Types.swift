@@ -27,4 +27,12 @@ public enum ChessColor: String, CustomStringConvertible, Sendable {
     case .white: return "w"
     }
   }
+
+  /// The opposite color
+  public var opposite: ChessColor {
+    switch self {
+    case .black: return .white
+    case .white: return .black
+    }
+  }
 }

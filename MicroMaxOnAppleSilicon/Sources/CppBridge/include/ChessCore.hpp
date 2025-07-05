@@ -7,6 +7,8 @@
 #include "../VirtualState.hpp"
 #include "../Protocol.hpp"
 #include "../VirtualMovement.hpp"
+#include <vector>
+#include <string>
 //#include "ChessMoveDecoder.hpp"
 
 struct ChessCoreImpl;

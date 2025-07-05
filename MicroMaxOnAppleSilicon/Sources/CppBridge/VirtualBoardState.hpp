@@ -3,6 +3,7 @@
 
 #include "Types.hpp"
 #include "VirtualSquare.hpp"
+#include <string>
 
 namespace Framework
 {

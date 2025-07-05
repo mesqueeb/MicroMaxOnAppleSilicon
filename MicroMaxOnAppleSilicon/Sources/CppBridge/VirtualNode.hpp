@@ -2,6 +2,7 @@
 #define NODE_HPP
 
 #include "VirtualMove.hpp"
+#include <string>
 
 namespace Framework
 {

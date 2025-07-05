@@ -1,6 +1,8 @@
 #ifndef WB_PROTOCOL_HPP
 #define WB_PROTOCOL_HPP
 
+#include <map>
+#include <string>
 #include "WBProtocolParser.hpp"
 #include "AbstractProtocol.hpp"
 #include "AdapterReceiver.hpp"

@@ -1,6 +1,8 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
+#include <vector>
+#include <string>
 #include "Types.hpp"
 #include "VirtualMove.hpp"
 #include "VirtualSquare.hpp"

@@ -4,6 +4,7 @@
 #include "VirtualResponder.hpp"
 #include "CoreResponder.hpp"
 #include "./include/ProtocolReceiver.hpp"
+#include <memory>
 
 namespace Framework
 {

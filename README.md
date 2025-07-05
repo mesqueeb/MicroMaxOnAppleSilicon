@@ -51,7 +51,6 @@ The library currently uses an [fmax.ini](./MicroMaxOnAppleSilicon/Resources/fmax
 
 If you want to bring your own `fmax.ini` file you can simply include it in your project's Bundle Resources, and the source code will use that file instead of the default behaviour. You can copy the base file and paste it into your project's directory and add it to the Bundle Resources of your target:
 
-![](./docs/copy_fmax_ini_file.jpg)
 ![](./docs/add_to_bundle_resources.jpg)
 
 That's all! Now the engine will use your own `fmax.ini` file in your project.

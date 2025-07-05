@@ -13,20 +13,6 @@ Micro-Max On Apple Silicon is the [µ-Max C Chess engine](https://home.hccnet.nl
 
 You can add `MicroMaxOnAppleSilicon` by adding it as a dependency to your `Package.swift` or add it via Xcode by searching for the name.
 
-The library currently relies on a certain file existing in your project's Bundle Resources, so you will need to manually add that before the engine can be used, otherwise you will hit an error:
-
-> fmax.ini not found in the framework bundle.
-
-The `fmax.ini` file is bundled with the files that will get installed with this package:
-
-![](./docs/copy_fmax_ini_file.jpg)
-
-You then have to copy paste this file into your project's directory and add it to the Bundle Resources of your target:
-
-![](./docs/add_to_bundle_resources.jpg)
-
-That's all! Now you can use the engine in your project.
-
 ## Usage
 
 ```swift
@@ -58,6 +44,19 @@ There is a sample Xcode project provided as part of the repo that you reference 
 ### Documentation
 
 See the [documentation](https://swiftpackageindex.com/mesqueeb/MicroMaxOnAppleSilicon/documentation/micromaxonapplesilicon) for more info.
+
+### Advanced Implementation via fmax.ini customizations
+
+The library currently uses an [fmax.ini](./MicroMaxOnAppleSilicon/Resources/fmax.ini) file bundled with the package which has information on how the engine behaves. If you are familiar with C, C++ and Chess, you can look through the source code and determine how to customize this file to your liking.
+
+If you want to bring your own `fmax.ini` file you can simply include it in your project's Bundle Resources, and the source code will use that file instead of the default behaviour. You can copy the base file and paste it into your project's directory and add it to the Bundle Resources of your target:
+
+![](./docs/copy_fmax_ini_file.jpg)
+![](./docs/add_to_bundle_resources.jpg)
+
+That's all! Now the engine will use your own `fmax.ini` file in your project.
+
+PS: Here is the code that loads the `fmax.ini` file: [MicroMaxOnAppleSilicon/Sources/ObjCBridge/EngineContext.m](./MicroMaxOnAppleSilicon/Sources/ObjCBridge/EngineContext.m). Let me know if there are any issues with this. PRs welcome!
 
 ## Development
 

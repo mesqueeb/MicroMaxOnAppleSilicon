@@ -1,6 +1,6 @@
 {
   "name": "MicroMaxOnAppleSilicon",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "type": "module",
   "scripts": {
     "bump": "np --no-cleanup --no-publish",

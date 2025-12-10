@@ -1,18 +1,12 @@
 import MicroMaxOnAppleSilicon
 import SwiftUI
 
-// Custom print that writes to stderr instead of stdout
-// (stdout is redirected to the engine pipe, so normal print would contaminate it)
-func print(_ messages: Any...) {
-  fputs(messages.map { "\($0)" }.joined(separator: " ") + "\n", stderr)
-}
-
 let testCommands = [
   "xboard",
   "new",
   "white",
   "force",
-  "st 1",
+  "st 10",
   "go",
 ]
 

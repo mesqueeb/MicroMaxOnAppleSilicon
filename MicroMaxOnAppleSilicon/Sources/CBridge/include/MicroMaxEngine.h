@@ -47,6 +47,14 @@ const char* micromax_engine_read(void);
  */
 int micromax_engine_has_response(void);
 
+/**
+ * Printf replacement for the engine - writes to the communication pipe instead of stdout.
+ * This allows Swift's print() to work normally while engine output goes to the pipe.
+ * @param format Printf-style format string
+ * @param ... Variable arguments
+ */
+void engine_printf(const char* format, ...);
+
 #ifdef __cplusplus
 }
 #endif

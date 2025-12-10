@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <sys/time.h>
-#include <stdio.h> // ???
-//#include "Application/Difficulty.hpp"
+#include <stdio.h>
+#include "include/MicroMaxEngine.h"
 
 #pragma GCC diagnostic warning "-w"
 
@@ -66,8 +66,7 @@ extern bool readLineForEngine(char buffer[], int size)
 {
     // Signal that we're done processing and waiting for input
     // This marker is used by the host to know when to stop reading output
-    printf("__READY__\n");
-    fflush(stdout);
+    engine_printf("__READY__\n");
 
 #ifdef ENGINE_DEBUG
     char *tempBuffer = buffer;

@@ -22,9 +22,7 @@ typedef struct {
     int out_fd;
     int in_eof;
     int in_size;
-    int out_size;
     char in_buffer[BUFFER_SIZE];
-    char out_buffer[BUFFER_SIZE];
 } io_buffer_t;
 
 /* -------------------- Engine State -------------------- */
@@ -52,7 +50,6 @@ extern int main_fairymax(int argc, char *argv[]);
 static void io_init(io_buffer_t* io) {
     io->in_eof = 0;
     io->in_size = 0;
-    io->out_size = 0;
 }
 
 static int my_read(int fd, char* buffer, int size) {
@@ -153,20 +150,12 @@ static void io_send(io_buffer_t* io, const char* format, ...) {
     vsnprintf(string, sizeof(string), format, arg_list);
     va_end(arg_list);
     
+    // Write the formatted string
     int len = (int)strlen(string);
-    if (io->out_size + len > BUFFER_SIZE - 2) {
-        return;
-    }
-    
-    memcpy(&io->out_buffer[io->out_size], string, len);
-    io->out_size += len;
+    my_write(io->out_fd, string, len);
     
     // Append newline
-    io->out_buffer[io->out_size++] = LF;
-    
-    // Flush buffer
-    my_write(io->out_fd, io->out_buffer, io->out_size);
-    io->out_size = 0;
+    my_write(io->out_fd, "\n", 1);
 }
 
 // Read a single line from engine (blocks until available)
@@ -241,6 +230,25 @@ void getMicroMaxIni(char* ini) {
     }
 }
 
+/* -------------------- engine_printf (called by Fairymax.c instead of printf) -------------------- */
+
+void engine_printf(const char* format, ...) {
+    if (!engine_state.initialized) {
+        return;
+    }
+    
+    va_list arg_list;
+    char buffer[4096];
+    
+    va_start(arg_list, format);
+    vsnprintf(buffer, sizeof(buffer), format, arg_list);
+    va_end(arg_list);
+    
+    // Write directly to the from_engine pipe (no newline added - printf doesn't add one automatically)
+    int len = (int)strlen(buffer);
+    my_write(engine_state.from_engine.out_fd, buffer, len);
+}
+
 /* -------------------- Public API -------------------- */
 
 const char* micromax_engine_start(const char* iniFilePath) {
@@ -274,8 +282,8 @@ const char* micromax_engine_start(const char* iniFilePath) {
     // Set the engine's input file descriptor
     __engineFD__ = engine_state.to_engine.in_fd;
     
-    // Redirect stdout to the pipe so engine output comes to us
-    dup2(engine_state.from_engine.out_fd, STDOUT_FILENO);
+    // Note: We do NOT redirect stdout here. Instead, Fairymax uses engine_printf()
+    // which writes directly to our pipe. This keeps stdout available for Swift's print().
     
     // Create engine thread
     pthread_attr_t attr;

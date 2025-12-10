@@ -69,11 +69,130 @@ public actor MicroMaxBridge {
   public var engineRunning: Bool {
     isRunning
   }
+
+  // MARK: - Position Setup
+
+  /// Set up a chess position from a FEN string using WinBoard edit mode
+  /// - Parameter fen: FEN string describing the position
+  private func setupPositionFromFEN(_ fen: String) async throws {
+    guard let parsed = FENParser.parse(fen) else {
+      throw MicroMaxError.invalidFEN
+    }
+
+    // Start fresh game
+    _ = await sendCommand("new")
+
+    // Set which side is to move
+    _ = await sendCommand(parsed.activeColor == "w" ? "white" : "black")
+
+    _ = await sendCommand("force")
+    _ = await sendCommand("edit")
+    _ = await sendCommand("#")  // Clear the board
+
+    // Place white pieces (uppercase in FEN)
+    for (file, rank, piece) in parsed.pieces where piece.isUppercase {
+      let square = "\(Character(UnicodeScalar(97 + file)!))\(rank + 1)"
+      _ = await sendCommand("\(piece)\(square)")
+    }
+
+    // Switch to black pieces
+    _ = await sendCommand("c")
+
+    // Place black pieces (lowercase in FEN, but send as uppercase to WinBoard)
+    for (file, rank, piece) in parsed.pieces where piece.isLowercase {
+      let square = "\(Character(UnicodeScalar(97 + file)!))\(rank + 1)"
+      _ = await sendCommand("\(piece.uppercased())\(square)")
+    }
+
+    // End edit mode
+    _ = await sendCommand(".")
+    _ = await sendCommand("force")
+  }
+
+  // MARK: - AI Move Request
+
+  /// Request an AI move for the given position.
+  /// - Parameters:
+  ///   - fenState: FEN string describing the current position
+  ///   - thinkTime: Time in seconds for the engine to think (default: 3)
+  /// - Returns: The move as (from, to) coordinates
+  /// - Throws: MicroMaxError if engine not running, invalid FEN, or no move returned
+  public func requestAiMove(fenState: String, thinkTime: Int = 3) async throws -> MoveResult {
+    guard isRunning else {
+      throw MicroMaxError.engineNotRunning
+    }
+
+    // Set up the position from FEN
+    try await setupPositionFromFEN(fenState)
+
+    // Set thinking time
+    _ = await sendCommand("st \(thinkTime)")
+
+    // Ask engine to think and make a move
+    guard let response = await sendCommand("go") else {
+      throw MicroMaxError.noMoveReturned
+    }
+
+    // Parse the move from response
+    guard let move = parseMoveResponse(response) else {
+      throw MicroMaxError.noMoveReturned
+    }
+
+    return move
+  }
+
+  // MARK: - Move Response Parsing
+
+  /// Parse a move response from the engine
+  /// - Parameter response: Engine response like "move e2e4" or multiline with "move e2e4"
+  /// - Returns: MoveResult with from/to coordinates, or nil if parsing failed
+  private func parseMoveResponse(_ response: String) -> MoveResult? {
+    // Look for "move e2e4" pattern in the response
+    let lines = response.split(separator: "\n")
+    for line in lines {
+      let trimmed = line.trimmingCharacters(in: .whitespaces)
+      if trimmed.hasPrefix("move ") {
+        let moveStr = String(trimmed.dropFirst(5))  // Remove "move "
+        return parseMoveString(moveStr)
+      }
+    }
+    return nil
+  }
+
+  /// Parse a move string like "e2e4" into coordinates
+  /// - Parameter move: Move string in format "e2e4" or "e7e8q" (with promotion)
+  /// - Returns: MoveResult with from/to coordinates
+  private func parseMoveString(_ move: String) -> MoveResult? {
+    guard move.count >= 4 else { return nil }
+
+    let chars = Array(move)
+
+    // Parse source square (e.g., "e2")
+    guard let fromFile = chars[0].asciiValue.map({ Int($0) - 97 }),
+      let fromRank = Int(String(chars[1])).map({ $0 - 1 }),
+      fromFile >= 0, fromFile < 8, fromRank >= 0, fromRank < 8
+    else { return nil }
+
+    // Parse destination square (e.g., "e4")
+    guard let toFile = chars[2].asciiValue.map({ Int($0) - 97 }),
+      let toRank = Int(String(chars[3])).map({ $0 - 1 }),
+      toFile >= 0, toFile < 8, toRank >= 0, toRank < 8
+    else { return nil }
+
+    let from = fileRankToCoordinate(file: fromFile, rank: fromRank)
+    let to = fileRankToCoordinate(file: toFile, rank: toRank)
+
+    return (from: from, to: to)
+  }
 }
+
+// MARK: - Errors
 
 public enum MicroMaxError: Error, LocalizedError {
   case iniFileNotFound
   case engineNotRunning
+  case invalidFEN
+  case noMoveReturned
 
   public var errorDescription: String? {
     switch self {
@@ -81,20 +200,24 @@ public enum MicroMaxError: Error, LocalizedError {
       return "Could not find fmax.ini configuration file"
     case .engineNotRunning:
       return "Engine is not running"
+    case .invalidFEN:
+      return "Invalid FEN string"
+    case .noMoveReturned:
+      return "Engine did not return a move"
     }
   }
 }
 
-// MARK: - Legacy types (kept for potential future use)
+// MARK: - Legacy types
 
 public typealias MoveResult = (from: ChessBoardCoordinate?, to: ChessBoardCoordinate?)
 
 public enum GameStatus: String, Sendable {
-  case normal // 0
-  case checkmated // 1
-  case stalemate // 2
-  case fiftyMove // 3
-  case insufficient // 4
+  case normal  // 0
+  case checkmated  // 1
+  case stalemate  // 2
+  case fiftyMove  // 3
+  case insufficient  // 4
 
   init?(_ code: Int) {
     switch code {

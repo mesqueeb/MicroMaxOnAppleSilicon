@@ -101,7 +101,7 @@ struct ContentView: View {
           .cornerRadius(10)
 
         VStack {
-          ForEach(sentCommands, id: \.self) { command in
+          ForEach(Array(sentCommands.enumerated()), id: \.offset) { index, command in
             Text(command).font(.caption)
           }
         }

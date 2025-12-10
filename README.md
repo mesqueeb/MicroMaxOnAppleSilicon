@@ -7,7 +7,7 @@
 .package(url: "https://github.com/mesqueeb/MicroMaxOnAppleSilicon", from: "3.0.0")
 ```
 
-Micro-Max On Apple Silicon is the [µ-Max C Chess engine](https://home.hccnet.nl/h.g.muller/max-src2.html) by H.G. Muller to play Chess games. Built as multi-platform XCframework for iOS, macOS and visionOS. Wrapped as a modernised Swift Package that can be included in any Swift project and can build on all Apple platforms.
+Micro-Max On Apple Silicon is the [µ-Max C Chess engine](https://home.hccnet.nl/h.g.muller/max-src2.html) by H.G. Muller to play Chess games. Wrapped and built as multi-platform Swift Package for iOS, macOS and visionOS.
 
 ## Installation
 
@@ -15,18 +15,38 @@ You can add `MicroMaxOnAppleSilicon` by adding it as a dependency to your `Packa
 
 ## Usage
 
+You can use WinBoard protocol commands to interact with the engine.
+
 ```swift
 import MicroMaxOnAppleSilicon
 
 let bridge = MicroMaxBridge()
 
-bridge.connectToEngine()
+do {
+  _ = try await bridge.startEngine()
+  print(await bridge.sendCommand("xboard")) // nil
+  print(await bridge.sendCommand("new")) // nil
+  print(await bridge.sendCommand("white")) // nil
+  print(await bridge.sendCommand("force")) // nil
+  print(await bridge.sendCommand("st 1")) // nil
+  print(await bridge.sendCommand("go")) // "move c2c4"
+} catch {
+  print("something went wrong... error:", error)
+}
 
-/// You need to feed the engine FEN state strings to be able to request moves
+// Don't forget to stop the engine when done
+await bridge.stopEngine()
+```
+
+The library comes with some useful types and helper functions, be sure to check out the [Swift wrapper's source code here](./MicroMaxOnAppleSilicon/Sources/SwiftBridge/).
+
+One example is that you can use FEN state strings to request moves from the engine:
+
+```swift
 let fenState: String = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 do {
-  let (from, to) = try await bridge.requestAiMove(fenState: inputText)
+  let (from, to) = try await bridge.requestAiMove(fenState: fenState)
   guard let from, let to else { throw fatalError("no result") }
 
   print("MicroMax moves from \(from) to \(to)") // Eg. from "B7" to "B6"
@@ -34,8 +54,6 @@ do {
   print("something went wrong... error:", error)
 }
 ```
-
-The library comes with some useful types and helper functions, be sure to check out the [Swift wrapper's source code here](./MicroMaxOnAppleSilicon/SwiftBridge/).
 
 ### Sample Project
 
@@ -47,15 +65,9 @@ See the [documentation](https://swiftpackageindex.com/mesqueeb/MicroMaxOnAppleSi
 
 ### Advanced Implementation via fmax.ini customizations
 
-The library currently uses an [fmax.ini](./MicroMaxOnAppleSilicon/Resources/fmax.ini) file bundled with the package which has information on how the engine behaves. If you are familiar with C, C++ and Chess, you can look through the source code and determine how to customize this file to your liking.
+The library uses an [fmax.ini](./MicroMaxOnAppleSilicon/Sources/SwiftBridge/Resources/fmax.ini) file bundled with the package to configure the engine's behavior. If you're familiar with C and Chess, you can customize this file to modify how the engine plays.
 
-If you want to bring your own `fmax.ini` file you can simply include it in your project's Bundle Resources, and the source code will use that file instead of the default behaviour. You can copy the base file and paste it into your project's directory and add it to the Bundle Resources of your target:
-
-![](./docs/add_to_bundle_resources.jpg)
-
-That's all! Now the engine will use your own `fmax.ini` file in your project.
-
-PS: Here is the code that loads the `fmax.ini` file: [MicroMaxOnAppleSilicon/Sources/ObjCBridge/EngineContext.m](./MicroMaxOnAppleSilicon/Sources/ObjCBridge/EngineContext.m). Let me know if there are any issues with this. PRs welcome!
+Currently, the engine always uses the `fmax.ini` file from the package bundle. To use a custom `fmax.ini` from your app's Bundle Resources, modify `startEngine()` in [MicroMaxBridge.swift](./MicroMaxOnAppleSilicon/Sources/SwiftBridge/MicroMaxBridge.swift) to check `Bundle.main` before falling back to `Bundle.module`. PRs welcome!
 
 ## Development
 

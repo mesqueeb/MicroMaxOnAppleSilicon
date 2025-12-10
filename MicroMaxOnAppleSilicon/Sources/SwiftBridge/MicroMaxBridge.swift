@@ -1,8 +1,92 @@
-import Asyncify
 import Foundation
-@preconcurrency import MicroMaxObjCBridge
+import MicroMaxCBridge
 
-private typealias MoveResultObjC = (src: (file: Int32, rank: Int32), dest: (file: Int32, rank: Int32))
+public actor MicroMaxBridge {
+  private var isRunning = false
+
+  public init() {}
+
+  /// Start the MicroMax chess engine.
+  /// The engine uses WinBoard protocol for communication.
+  /// - Returns: The engine's initialization output (banners like "Fairy-Max 4.80"), or nil if empty
+  public func startEngine() async throws -> String? {
+    guard !isRunning else { return nil }
+
+    // Find the fmax.ini file in the bundle
+    guard let iniPath = Bundle.module.path(forResource: "fmax", ofType: "ini") else {
+      throw MicroMaxError.iniFileNotFound
+    }
+
+    // Run on background thread since C code blocks
+    let initOutput = await Task.detached { () -> String in
+      guard let result = micromax_engine_start(iniPath) else {
+        return ""
+      }
+      return String(cString: result)
+    }.value
+
+    isRunning = true
+    return initOutput.isEmpty ? nil : initOutput
+  }
+
+  /// Stop the MicroMax chess engine.
+  public func stopEngine() {
+    guard isRunning else { return }
+    micromax_engine_stop()
+    isRunning = false
+  }
+
+  /// Send a WinBoard protocol command to the engine and get the response.
+  /// This method blocks until the engine has processed the command.
+  ///
+  /// Common commands:
+  /// - `xboard` - Initialize WinBoard protocol
+  /// - `new` - Start a new game
+  /// - `force` - Put engine in force mode (doesn't play automatically)
+  /// - `white` / `black` - Set which side the engine plays
+  /// - `st <seconds>` - Set time limit for thinking
+  /// - `go` - Tell engine to start thinking and make a move
+  /// - `edit` - Enter edit mode for setting up positions
+  /// - `quit` - Quit the engine
+  ///
+  /// - Parameter command: The WinBoard command to send
+  /// - Returns: The engine's response, or nil if no response
+  public func sendCommand(_ command: String) async -> String? {
+    guard isRunning else { return nil }
+
+    // Run on background thread since C code blocks until engine responds
+    let response = await Task.detached { () -> String in
+      guard let result = micromax_engine_send_command(command) else {
+        return ""
+      }
+      return String(cString: result)
+    }.value
+
+    return response.isEmpty ? nil : response
+  }
+
+  /// Check if the engine is currently running.
+  public var engineRunning: Bool {
+    isRunning
+  }
+}
+
+public enum MicroMaxError: Error, LocalizedError {
+  case iniFileNotFound
+  case engineNotRunning
+
+  public var errorDescription: String? {
+    switch self {
+    case .iniFileNotFound:
+      return "Could not find fmax.ini configuration file"
+    case .engineNotRunning:
+      return "Engine is not running"
+    }
+  }
+}
+
+// MARK: - Legacy types (kept for potential future use)
+
 public typealias MoveResult = (from: ChessBoardCoordinate?, to: ChessBoardCoordinate?)
 
 public enum GameStatus: String, Sendable {
@@ -14,69 +98,12 @@ public enum GameStatus: String, Sendable {
 
   init?(_ code: Int) {
     switch code {
-    case 0:
-      self = .normal
-    case 1:
-      self = .checkmated
-    case 2:
-      self = .stalemate
-    case 3:
-      self = .fiftyMove
-    case 4:
-      self = .insufficient
-    default:
-      return nil
+    case 0: self = .normal
+    case 1: self = .checkmated
+    case 2: self = .stalemate
+    case 3: self = .fiftyMove
+    case 4: self = .insufficient
+    default: return nil
     }
-  }
-}
-
-public actor MicroMaxBridge {
-  private nonisolated(unsafe) let bridge: MicroMaxObjCBridge
-
-  public init() {
-    bridge = MicroMaxObjCBridge()
-  }
-
-  public func connectToEngine() {
-    bridge.connectToEngine()
-  }
-
-  /// Returns the current game status given a FEN string. `.normal` means normal play is ongoing.
-  public func getGameStatus(_ fenState: String) -> GameStatus? {
-    return GameStatus(Int(bridge.getGameStatus(fenState)))
-  }
-
-  /// Returns wether or not a move from one coordinate to another is legal or not.
-  public func isMoveLegal(_ fenState: String, from: ChessBoardCoordinate, to: ChessBoardCoordinate) -> Bool {
-    guard let src = coordinateToFileRank(from),
-          let dest = coordinateToFileRank(to) else { return false }
-    return bridge.isMoveLegal(
-      fenState,
-      srcFile: Int32(src.file),
-      srcRank: Int32(src.rank),
-      dstFile: Int32(dest.file),
-      dstRank: Int32(dest.rank)
-    )
-  }
-
-  private let asyncify = Asyncify<MoveResultObjC>()
-
-  /// Returns the file and rank with a 0 index
-  public func requestAiMove(fenState: String) async throws -> MoveResult {
-    // TODO: if passed fenState is invalid, throw error?
-    // continuation.resume(throwing: error)
-    // continuation.resume(throwing: NSError(domain: "UnknownError", code: -1, userInfo: nil))
-
-    let (src, dest) = try await asyncify.performOperation { [self] completion in
-      self.bridge.receiveMove = { srcFile, srcRank, dstFile, dstRank, _ in
-        let result = (src: (file: Int32(srcFile), rank: Int32(srcRank)), dest: (file: Int32(dstFile), rank: Int32(dstRank)))
-        completion(.success(result))
-      }
-      self.bridge.request(fenState)
-    }
-    return (
-      from: fileRankToCoordinate(file: Int(src.file), rank: Int(src.rank)),
-      to: fileRankToCoordinate(file: Int(dest.file), rank: Int(dest.rank))
-    )
   }
 }

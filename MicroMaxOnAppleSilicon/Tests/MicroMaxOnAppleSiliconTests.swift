@@ -53,57 +53,56 @@ class MicroMaxOnAppleSiliconTests: XCTestCase {
     XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 7, rank: 3) == .H4)
   }
 
-  func testMoveLegality() async {
-    await bridge.connectToEngine()
-    // Test 1.Nc3 from the starting position (Expected: True)
-    let result1 = await bridge.isMoveLegal("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", from: .B1, to: .C3)
-    XCTAssertTrue(result1, "1.Nc3 should be legal")
-
-    // Test 1.Nb3 from the starting position (Expected: False)
-    let result2 = await bridge.isMoveLegal("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", from: .B1, to: .B3)
-    XCTAssertTrue(result2 == false, "1.Nb3 should be illegal")
-
-    // Test 1.d4 from the starting position (Expected: True)
-    let result3 = await bridge.isMoveLegal("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", from: .D2, to: .D3)
-    XCTAssertTrue(result3, "1.d4 should be legal")
-
-    // Test 1...Qh4 illegal move (Expected: False)
-    let result4 = await bridge.isMoveLegal("rnbqkb1r/pppp1ppp/4pn2/8/6P1/8/PPPPPP1P/RNBQKBNR b KQkq - 0 1", from: .D8, to: .H4)
-    XCTAssertTrue(result4 == false, "1...Qh4 should be illegal in this position")
-
-    // Test 1...Qh4 legal move (Expected: True)
-    let result5 = await bridge.isMoveLegal("rnbqkbnr/pppp1ppp/4p3/8/6P1/8/PPPPPP1P/RNBQKBNR b KQkq - 0 1", from: .D8, to: .H4)
-    XCTAssertTrue(result5, "1...Qh4 should be legal in this position")
+  func testStartEngineReturnsInitBanners() async throws {
+    let initOutput = try await bridge.startEngine()
+    
+    // Engine should return initialization banners containing "Fairy-Max"
+    XCTAssertNotNil(initOutput, "Engine should return init banners")
+    XCTAssertTrue(initOutput?.contains("Fairy-Max") == true, "Init output should contain Fairy-Max")
+    
+    // Verify engine is running
+    let isRunning = await bridge.engineRunning
+    XCTAssertTrue(isRunning, "Engine should be running after start")
+    
+    // Stop the engine
+    await bridge.stopEngine()
   }
 
-  func testGameStatus() async {
-    await bridge.connectToEngine()
-    // Starting position should be normal (Expected: 0)
-    if let result1 = await bridge.getGameStatus("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1") {
-      XCTAssertTrue(result1 == GameStatus.normal, "Game status should be normal")
-    } else {
-      XCTFail("Status should not be nil")
-    }
+  func testSendCommandNoResponse() async throws {
+    _ = try await bridge.startEngine()
+    
+    // Commands like "new" should return nil (no response)
+    let response = await bridge.sendCommand("new")
+    XCTAssertNil(response, "'new' command should return nil (no response)")
+    
+    await bridge.stopEngine()
+  }
 
-    // Checkmated position (Expected: 1)
-    if let result2 = await bridge.getGameStatus("4R1k1/5ppp/8/8/8/8/5PPP/6K1 b - - 0 1") {
-      XCTAssertTrue(result2 == GameStatus.checkmated, "Game status should be checkmate")
-    } else {
-      XCTFail("Status should not be nil")
-    }
+  func testSendCommandWithResponse() async throws {
+    _ = try await bridge.startEngine()
+    
+    // Set up for a move
+    _ = await bridge.sendCommand("new")
+    _ = await bridge.sendCommand("force")
+    _ = await bridge.sendCommand("st 1")  // 1 second think time
+    
+    // "go" command should return a move
+    let response = await bridge.sendCommand("go")
+    XCTAssertNotNil(response, "'go' command should return a response")
+    XCTAssertTrue(response?.starts(with: "move ") == true, "Response should be a move like 'move e2e4'")
+    
+    await bridge.stopEngine()
+  }
 
-    // Stalemate position (Expected: 2)
-    if let result3 = await bridge.getGameStatus("6k1/6P1/6KP/8/8/8/8/8 b - - 0 1") {
-      XCTAssertTrue(result3 == GameStatus.stalemate, "Game status should be stalemate")
-    } else {
-      XCTFail("Status should not be nil")
-    }
-
-    // Normal position (Expected: 0)
-    if let result4 = await bridge.getGameStatus("6k1/6P1/6KP/8/8/8/8/8 w - - 0 1") {
-      XCTAssertTrue(result4 == GameStatus.normal, "Game status should be normal")
-    } else {
-      XCTFail("Status should not be nil")
-    }
+  func testEngineStartStop() async throws {
+    _ = try await bridge.startEngine()
+    
+    let isRunning = await bridge.engineRunning
+    XCTAssertTrue(isRunning, "Engine should be running after start")
+    
+    await bridge.stopEngine()
+    
+    let isStoppedNow = await bridge.engineRunning
+    XCTAssertFalse(isStoppedNow, "Engine should not be running after stop")
   }
 }

@@ -6,15 +6,14 @@ let testCommands = [
   "new",
   "white",
   "force",
-  "st 10",
+  "st 1",
   "go",
 ]
 
 struct ContentView: View {
-  @State private var sentCommands: [String] = []
+  @State private var commandResponsePairs: [(command: String, response: String)] = []
   @State private var testCommandIndex: Int = 0
   @State private var inputText: String = testCommands[0]
-  @State private var engineResponse: String = ""
   @State private var engineError: String = ""
 
   @State var bridge: MicroMaxBridge? = nil
@@ -42,17 +41,18 @@ struct ContentView: View {
     await bridge?.stopEngine()
     testCommandIndex = 0
     bridge = nil
-    sentCommands = []
+    commandResponsePairs = []
     inputText = testCommands[0]
-    engineResponse = ""
     engineError = ""
     print("Engine stopped")
   }
 
-  func handleResponse(_ response: String?) {
+  func updateResponse(at index: Int, _ response: String?) {
     let responseText = response ?? "nil"
     print("response →", responseText)
-    engineResponse = responseText
+    if index < commandResponsePairs.count {
+      commandResponsePairs[index].response = responseText
+    }
 
     testCommandIndex += 1
     if testCommandIndex >= testCommands.count {
@@ -65,16 +65,22 @@ struct ContentView: View {
   }
 
   func submitCommand() {
+    guard let bridge else { return }
+    let command = inputText
+    
+    // Add command immediately with empty response
+    let index = commandResponsePairs.count
+    commandResponsePairs.append((command: command, response: ""))
+    
+    // Update response asynchronously when it arrives
     Task {
-      guard let bridge else { return }
-      sentCommands.append(inputText)
-      let response = await bridge.sendCommand(inputText)
-      handleResponse(response)
+      let response = await bridge.sendCommand(command)
+      updateResponse(at: index, response)
     }
   }
 
   var body: some View {
-    VStack(spacing: 16) {
+    VStack(spacing: 0) {
       if bridge == nil {
         Button("Start Engine") { Task { await startEngine() } }
           .padding()
@@ -84,25 +90,63 @@ struct ContentView: View {
       }
 
       if bridge != nil {
-        TextField("Enter text here", text: $inputText)
-          .textFieldStyle(RoundedBorderTextFieldStyle())
-          .padding()
+        GeometryReader { geometry in
+          ScrollViewReader { proxy in
+            ScrollView {
+              VStack(alignment: .trailing, spacing: 8) {
+                Spacer()
+                
+                ForEach(Array(commandResponsePairs.enumerated()), id: \.offset) { index, pair in
+                  HStack(alignment: .top, spacing: 16) {
+                    // Command on the left
+                    Text(pair.command)
+                      .font(.caption)
+                      .frame(maxWidth: .infinity, alignment: .leading)
 
-        Button("Submit") { submitCommand() }
-          .padding()
-          .foregroundColor(.white)
-          .background(Color.blue)
-          .cornerRadius(10)
-
-        VStack {
-          ForEach(Array(sentCommands.enumerated()), id: \.offset) { index, command in
-            Text(command).font(.caption)
+                    // Response on the right
+                    Text(pair.response.isEmpty ? "..." : pair.response)
+                      .font(.caption)
+                      .foregroundColor(.white)
+                      .padding()
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                      .background(Color.black)
+                  }
+                  .id(index)
+                }
+              }
+              .frame(minHeight: geometry.size.height - 50)
+              .padding()
+            }
+            .onChange(of: commandResponsePairs.count) { _ in
+              if let lastIndex = commandResponsePairs.indices.last {
+                withAnimation {
+                  proxy.scrollTo(lastIndex, anchor: .bottom)
+                }
+              }
+            }
           }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-        Text("Engine Response: \(engineResponse)")
+        // Input and button at the bottom
+        HStack(spacing: 8) {
+          TextField("Enter text here", text: $inputText)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
 
-        Text("Error: \(engineError)")
+          Button("Submit") { submitCommand() }
+            .padding(.horizontal)
+            .foregroundColor(.white)
+            .background(Color.blue)
+            .cornerRadius(10)
+        }
+        .padding()
+
+        if !engineError.isEmpty {
+          Text("Error: \(engineError)")
+            .foregroundColor(.red)
+            .font(.caption)
+            .padding(.horizontal)
+        }
 
         Button("Stop Engine") { Task { await stopEngine() } }
           .padding()

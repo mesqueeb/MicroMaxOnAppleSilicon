@@ -538,8 +538,13 @@ int main_fairymax(int argc, char **argv)
             /* If MaxMoves=1 any leftover time is lost*/
             Ticks = GetTickCount();
             m = MovesLeft<=0 ? 40 : MovesLeft;
-            tlim = (0.6-0.06*(BW-8))*(TimeLeft+(m-1)*TimeInc)/(m+7);
-            if(tlim>TimeLeft/15) tlim = TimeLeft/15;
+            /* If MaxMoves==1 (st mode), use full TimeLeft. Otherwise use conservative formula. */
+            if(MaxMoves == 1) {
+                tlim = TimeLeft;  /* Use full time for single-move mode */
+            } else {
+                tlim = (0.6-0.06*(BW-8))*(TimeLeft+(m-1)*TimeInc)/(m+7);
+                if(tlim>TimeLeft/15) tlim = TimeLeft/15;
+            }
             PromPiece = 0; /* Always promote to Queen ourselves */
             N=0;K=I;
             if (D(Side,-I,I,Q,O,LL|S,3)==I) {

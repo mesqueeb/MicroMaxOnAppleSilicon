@@ -28,6 +28,9 @@
 #include <signal.h>
 #include <time.h>
 
+// Use engine_printf instead of printf for proper pipe communication with Swift
+#include "../include/MicroMaxEngine.h"
+
 #ifndef INI_FILE
 #define INI_FILE "fmax.ini"
 #endif
@@ -136,7 +139,7 @@ int margin;
 void pboard()
 {int i;
     i=-1;W(++i<128)
-        //printf(" %c",(i&15)==BW&&(i+=15-BW)?10:n[b[i]&31]);
+        //engine_printf(" %c",(i&15)==BW&&(i+=15-BW)?10:n[b[i]&31]);
         fprintf(stderr, " %c",(i&15)==BW&&(i+=15-BW)?10:n[b[i]&31]);
     fprintf(stderr, Side == WHITE ? "White to move" : "Black to move");
 }
@@ -239,12 +242,12 @@ int k,q,l,e,E,z,n;      /* (q,l)=window, e=current eval. score, E=e.p. sqr.*/
                                 b[G]=b[FF];b[FF]=b[y]=0;b[x]=u;b[H]=t; /* undo move,G can be dummy */
                             }                                       /*          if non-castling */
                             if(z&S&&Post&K==I&d>2&v>V&v<l){int *p=ps;char X,Y;
-                                printf("%2d ",d-2);
-                                printf("%6d ",v);
-                                printf("%8d %10d",(GetTickCount()-Ticks)/10,N);
+                                engine_printf("%2d ",d-2);
+                                engine_printf("%6d ",v);
+                                engine_printf("%8d %10d",(GetTickCount()-Ticks)/10,N);
                                 while(*p){X=*p>>8;Y=*p++;
-                                    printf(" %c%c%c%c",'a'+(X&15),'8'-(X>>4),'a'+(Y&15),'8'-(Y>>4&7));}
-                                printf("\n");fflush(stdout);
+                                    engine_printf(" %c%c%c%c",'a'+(X&15),'8'-(X>>4),'a'+(Y&15),'8'-(Y>>4&7));}
+                                engine_printf("\n");fflush(stdout);
                             }
                             if(v>m)                                 /* new best, update max,best*/
                                 m=v,X=x,Y=y|S&F;                       /* mark non-double with S   */
@@ -322,7 +325,7 @@ int PrintResult(int s)
         /* is the same, count it */
         if(++cnt > 1) /* third repeat */
         {
-            printf("1/2-1/2 {Draw by repetition}\n");
+            engine_printf("1/2-1/2 {Draw by repetition}\n");
             return 1;
         }
     differs: ;
@@ -331,31 +334,31 @@ int PrintResult(int s)
     cnt = D(s,-I,I,Q,O,LL|4*S,3);
 #ifdef SHATRANJ
     if(pl[s]==1 && pl[16-s]==1) {
-        printf("1/2-1/2 {Insufficient mating material}\n");
+        engine_printf("1/2-1/2 {Insufficient mating material}\n");
         return 4;
     }
     if(pl[s]<=1 && pl[16-s]>1) {
         if (s == BLACK)
-            printf("0-1 {Bare King}\n");
+            engine_printf("0-1 {Bare King}\n");
         else
-            printf("1-0 {Bare King}\n");
+            engine_printf("1-0 {Bare King}\n");
         return 5;
     }
 #else
     if(cnt>-I+1 && K==0 && L==0) {
-        printf("1/2-1/2 {Stalemate}\n");
+        engine_printf("1/2-1/2 {Stalemate}\n");
         return 2;
     }
 #endif
     if(cnt==-I+1) {
         if (s == WHITE)
-            printf("0-1 {Black mates}\n");
+            engine_printf("0-1 {Black mates}\n");
         else
-            printf("1-0 {White mates}\n");
+            engine_printf("1-0 {White mates}\n");
         return 3;
     }
     if(Fifty >=100) {
-        printf("1/2-1/2 {Draw by fifty move rule}\n");
+        engine_printf("1/2-1/2 {Draw by fifty move rule}\n");
         return 4;
     }
     return 0;
@@ -409,8 +412,8 @@ void PrintVariants()
         while(fscanf(f, "Game: %s", buf) != 1 && c != EOF)
             while((c = fgetc(f)) != EOF && c != '\n');
         if(c == EOF) break;
-        if(count++) printf(",");
-        printf("%s", buf);
+        if(count++) engine_printf(",");
+        engine_printf("%s", buf);
     } while(c != EOF);
     
     fclose(f);
@@ -418,16 +421,16 @@ void PrintVariants()
 
 void PrintOptions()
 {
-    printf("feature option=\"Resign -check %d\"\n", Resign);
-    printf("feature option=\"Resign Threshold -spin %d 200 1200\"\n", Threshold);
-    printf("feature option=\"Ini File -file %s\"\n", inifile);
-    printf("feature option=\"Multi-PV Margin -spin %d 0 1000\"\n", margin);
-    printf("feature option=\"Playing Style ;-) -combo Brilliant /// *Brave /// Beautiful\"\n");
-    printf("feature option=\"Dummy Slider Example -slider 20 0 100\"\n");
-    printf("feature option=\"Dummy String Example -file happy birthday!\"\n");
-    printf("feature option=\"Dummy Path Example -path .\"\n");
-    printf("feature option=\"Clear Hash -button\"\n");
-    printf("feature done=1\n");
+    engine_printf("feature option=\"Resign -check %d\"\n", Resign);
+    engine_printf("feature option=\"Resign Threshold -spin %d 200 1200\"\n", Threshold);
+    engine_printf("feature option=\"Ini File -file %s\"\n", inifile);
+    engine_printf("feature option=\"Multi-PV Margin -spin %d 0 1000\"\n", margin);
+    engine_printf("feature option=\"Playing Style ;-) -combo Brilliant /// *Brave /// Beautiful\"\n");
+    engine_printf("feature option=\"Dummy Slider Example -slider 20 0 100\"\n");
+    engine_printf("feature option=\"Dummy String Example -file happy birthday!\"\n");
+    engine_printf("feature option=\"Dummy Path Example -path .\"\n");
+    engine_printf("feature option=\"Clear Hash -button\"\n");
+    engine_printf("feature done=1\n");
 }
 
 
@@ -444,11 +447,11 @@ int LoadGame(char *name)
 
     f = fopen(ini, "r");
     if(f==NULL)
-    {   printf("telluser piece-desription file '%s'  not found\n", inifile);
+    {   engine_printf("telluser piece-desription file '%s'  not found\n", inifile);
         exit(0);
     }
     if(fscanf(f, "version 4.8(%c)", &c)!=1 || c != 'w')
-    { printf("telluser incompatible fmax.ini file\n"); exit(0); }
+    { engine_printf("telluser incompatible fmax.ini file\n"); exit(0); }
     
     if(name != NULL)
     {  /* search for game name in definition file */
@@ -456,7 +459,7 @@ int LoadGame(char *name)
             while((c = fgetc(f)) != EOF && c != '\n');
             count++;
             if(c == EOF) {
-                printf("telluser variant %s not supported\n", name);
+                engine_printf("telluser variant %s not supported\n", name);
                 fclose(f);
                 return 1; /* keep old settings */
             }
@@ -466,7 +469,7 @@ int LoadGame(char *name)
     
     /* We have found variant, or if none specified, are at beginning of file */
     if(fscanf(f, "%dx%d", &BW, &BH)!=2 || BW>12 || BH!=8)
-    { printf("telluser unsupported board size %dx%d\n",BW,BH); exit(0); }
+    { engine_printf("telluser unsupported board size %dx%d\n",BW,BH); exit(0); }
     
     for(i=0; i<BW; i++) fscanf(f, "%d", oo+i);
     for(i=0; i<BW; i++) fscanf(f, "%d", oo+i+16);
@@ -483,7 +486,7 @@ int LoadGame(char *name)
         if(piecetype[c&31]==0) piecetype[c&31]=i; // only first
     }
         j++; o[j]=0;
-        /* printf("# c='%c' i=%d od[i]=%d j=%d (%3d,%8x)\n",c?c:' ',i,od[i],j,o[j-1],of[j-1]); /**/
+        /* engine_printf("# c='%c' i=%d od[i]=%d j=%d (%3d,%8x)\n",c?c:' ',i,od[i],j,o[j-1],of[j-1]); /**/
         c=0; if(i>15 || j>255) break;
     }
     
@@ -508,10 +511,10 @@ int main_fairymax(int argc, char **argv)
     if(argc>1) inifile = argv[1];
     
     signal(SIGINT, SIG_IGN);
-    printf("tellics say     " NAME " " VERSION "\n");
-    printf("tellics say     by H.G. Muller\n");
-    printf("tellics say Gothic Chess is protected by U.S. patent #6,481,716 by Ed Trice.\n");
-    printf("tellics say Falcon Chess is protected by U.S. patent #5,690,334 by George W. Duke\n");
+    engine_printf("tellics say     " NAME " " VERSION "\n");
+    engine_printf("tellics say     by H.G. Muller\n");
+    engine_printf("tellics say Gothic Chess is protected by U.S. patent #6,481,716 by Ed Trice.\n");
+    engine_printf("tellics say Falcon Chess is protected by U.S. patent #5,690,334 by George W. Duke\n");
     InitEngine();
     LoadGame(NULL);
     InitGame();
@@ -535,22 +538,27 @@ int main_fairymax(int argc, char **argv)
             /* If MaxMoves=1 any leftover time is lost*/
             Ticks = GetTickCount();
             m = MovesLeft<=0 ? 40 : MovesLeft;
-            tlim = (0.6-0.06*(BW-8))*(TimeLeft+(m-1)*TimeInc)/(m+7);
-            if(tlim>TimeLeft/15) tlim = TimeLeft/15;
+            /* If MaxMoves==1 (st mode), use full TimeLeft. Otherwise use conservative formula. */
+            if(MaxMoves == 1) {
+                tlim = TimeLeft;  /* Use full time for single-move mode */
+            } else {
+                tlim = (0.6-0.06*(BW-8))*(TimeLeft+(m-1)*TimeInc)/(m+7);
+                if(tlim>TimeLeft/15) tlim = TimeLeft/15;
+            }
             PromPiece = 0; /* Always promote to Queen ourselves */
             N=0;K=I;
             if (D(Side,-I,I,Q,O,LL|S,3)==I) {
                 Side ^= BLACK^WHITE;
                 if(UnderProm>=0 && UnderProm != L)
-                {    printf("tellics I hate under-promotions!\n");
-                    printf("resign { underpromotion } \n");
+                {    engine_printf("tellics I hate under-promotions!\n");
+                    engine_printf("resign { underpromotion } \n");
                     Computer = EMPTY;
                     continue;
                 } else UnderProm = -1;
-                printf("move ");
-                printf("%c%c%c%c",'a'+(K&15),'0'+BH-(K>>4),
+                engine_printf("move ");
+                engine_printf("%c%c%c%c",'a'+(K&15),'0'+BH-(K>>4),
                        'a'+(L&15),'0'+BH-(L>>4));
-                printf("\n");
+                engine_printf("\n");
                 m = GetTickCount() - Ticks;
                 
                 /* time-control accounting */
@@ -566,12 +574,12 @@ int main_fairymax(int argc, char **argv)
                 GameHistory[GamePtr++] = PACK_MOVE;
                 CopyBoard(HistPtr=HistPtr+1&1023);
                 if(Resign && Score <= -Threshold) {
-                    printf("resign\n"); Computer=EMPTY;
+                    engine_printf("resign\n"); Computer=EMPTY;
                 } else if(PrintResult(Side))
                     Computer = EMPTY;
             } else {
                 if(!PrintResult(Side))
-                    printf("resign { refuses own move }\n");
+                    engine_printf("resign { refuses own move }\n");
                 Computer = EMPTY;
             }
             continue;
@@ -591,18 +599,18 @@ int main_fairymax(int argc, char **argv)
         if (!strcmp(command, "xboard"))
             continue;
         if (!strcmp(command, "protover")) {
-            printf("feature myname=\"" NAME " " VERSION "\"\n");
-            printf("feature memory=1\n");
-            printf("feature setboard=0 ping=1 done=0\n");
-            printf("feature variants=\"");
+            engine_printf("feature myname=\"" NAME " " VERSION "\"\n");
+            engine_printf("feature memory=1\n");
+            engine_printf("feature setboard=0 ping=1 done=0\n");
+            engine_printf("feature variants=\"");
             PrintVariants();
-            printf("\"\n");
+            engine_printf("\"\n");
             PrintOptions();
             continue;
         }
         if (!strcmp(command, "ping")) { int nr=0;
             sscanf(line, "ping %d", &nr);
-            printf("pong %d\n", nr);
+            engine_printf("pong %d\n", nr);
             continue;
         }
         if (!strcmp(command, "p")) {
@@ -732,10 +740,10 @@ int main_fairymax(int argc, char **argv)
             D(Side,-I,I,Q,O,LL|4*S,6);
             if (K==0 && L==0)
                 continue;
-            printf("Hint: ");
-            printf("%c%c%c%c",'a'+(K&7),'8'-(K>>4),
+            engine_printf("Hint: ");
+            engine_printf("%c%c%c%c",'a'+(K&7),'8'-(K>>4),
                    'a'+(L&7),'8'-(L>>4));
-            printf("\n");
+            engine_printf("\n");
             continue;
         }
         if (!strcmp(command, "undo")   && (nr=1) ||
@@ -845,7 +853,7 @@ int main_fairymax(int argc, char **argv)
         {char *c=line; K=c[0]-16*c[1]+799;L=c[2]-16*c[3]+799; }
         if (m)
         /* doesn't have move syntax */
-            printf("Error (unknown command): %s\n", command);
+            engine_printf("Error (unknown command): %s\n", command);
         else if(D(Side,-I,I,Q,O,LL|S,3)!=I) {
             /* did have move syntax, but illegal move */
             fprintf(stderr, "Illegal move:%s\n", line);

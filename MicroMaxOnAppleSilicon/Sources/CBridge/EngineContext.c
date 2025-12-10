@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <sys/time.h>
-#include <stdio.h> // ???
-//#include "Application/Difficulty.hpp"
+#include <stdio.h>
+#include "include/MicroMaxEngine.h"
 
 #pragma GCC diagnostic warning "-w"
 
@@ -21,8 +21,8 @@ unsigned __displayMultiPV__ = 1;
 // The rating performance for the engine
 //Difficulty __difficulty__;
 
-// File descriptor for the engine
-extern int __engineFD__;
+// File descriptor for the engine (shared with MicroMaxEngine.c)
+int __engineFD__ = -1;
 
 static int waitForLine(int fd, long seconds, long useconds)
 {
@@ -64,6 +64,10 @@ typedef int bool;
 // Read a line for the engne as directed by it's file descriptor
 extern bool readLineForEngine(char buffer[], int size)
 {
+    // Signal that we're done processing and waiting for input
+    // This marker is used by the host to know when to stop reading output
+    engine_printf("__READY__\n");
+
 #ifdef ENGINE_DEBUG
     char *tempBuffer = buffer;
 #endif

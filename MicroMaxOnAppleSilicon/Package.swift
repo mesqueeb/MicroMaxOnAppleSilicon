@@ -11,40 +11,26 @@ let package = Package(
   products: [
     .library(
       name: "MicroMaxOnAppleSilicon",
-      targets: ["MicroMaxCBridge", "MicroMaxCppBridge", "MicroMaxObjCBridge", "MicroMaxOnAppleSilicon"]
+      targets: ["MicroMaxCBridge", "MicroMaxOnAppleSilicon"]
     ),
-  ],
-  dependencies: [
-    .package(url: "https://github.com/mesqueeb/Asyncify", from: "0.0.9"),
   ],
   targets: [
     .target(
       name: "MicroMaxCBridge",
-      path: "Sources/CBridge"
-    ),
-    .target(
-      name: "MicroMaxCppBridge",
-      dependencies: ["MicroMaxCBridge"],
-      path: "Sources/CppBridge"
-    ),
-    .target(
-      name: "MicroMaxObjCBridge",
-      dependencies: ["MicroMaxCppBridge"],
-      path: "Sources/ObjCBridge",
-      resources: [.copy("Resources/fmax.ini")],
+      path: "Sources/CBridge",
       publicHeadersPath: "include"
     ),
     .target(
       name: "MicroMaxOnAppleSilicon",
-      dependencies: ["Asyncify", "MicroMaxObjCBridge"],
-      path: "Sources/SwiftBridge"
+      dependencies: ["MicroMaxCBridge"],
+      path: "Sources/SwiftBridge",
+      resources: [.copy("Resources/fmax.ini")]
     ),
     .testTarget(
       name: "MicroMaxOnAppleSiliconTests",
-      dependencies: ["MicroMaxCBridge", "MicroMaxCppBridge", "MicroMaxObjCBridge", "MicroMaxOnAppleSilicon"],
+      dependencies: ["MicroMaxCBridge", "MicroMaxOnAppleSilicon"],
       path: "Tests"
     ),
   ],
-  cLanguageStandard: .gnu17,
-  cxxLanguageStandard: .cxx20
+  cLanguageStandard: .gnu17
 )

@@ -8,9 +8,6 @@
       location = "group:MicroMaxOnAppleSilicon">
    </FileRef>
    <FileRef
-      location = "group:fmax.ini">
-   </FileRef>
-   <FileRef
       location = "group:package.json">
    </FileRef>
    <FileRef

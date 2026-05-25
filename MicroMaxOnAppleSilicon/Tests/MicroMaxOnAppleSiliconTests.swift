@@ -87,6 +87,9 @@ struct FileRank: Equatable {
   }
 }
 
+/// Engine tests share global C state (engine_state in MicroMaxEngine.c), so the whole
+/// nested suite must run serially even though Swift Testing parallelises by default.
+@Suite(.serialized) struct EngineLifecycle {
 @Suite struct EngineTests {
   @Test func startEngineReturnsInitBanners() async throws {
     let bridge = MicroMaxBridge()
@@ -195,4 +198,5 @@ struct FileRank: Equatable {
 
     await bridge.stopEngine()
   }
+}
 }

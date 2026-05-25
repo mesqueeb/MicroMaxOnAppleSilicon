@@ -1,14 +1,7 @@
 import MicroMaxOnAppleSilicon
 import SwiftUI
 
-let testCommands = [
-  "xboard",
-  "new",
-  "white",
-  "force",
-  "st 1",
-  "go",
-]
+let testCommands = ["xboard", "new", "white", "force", "st 1", "go"]
 
 struct ContentView: View {
   @State private var commandResponsePairs: [(command: String, response: String)] = []
@@ -25,9 +18,7 @@ struct ContentView: View {
       bridge = MicroMaxBridge()
       print("Engine starting...")
       do {
-        if let initOutput = try await bridge!.startEngine() {
-          print("Engine init:", initOutput)
-        }
+        if let initOutput = try await bridge!.startEngine() { print("Engine init:", initOutput) }
         print("Engine started")
       } catch {
         print("Engine failed to start, error: \(error)")
@@ -50,9 +41,7 @@ struct ContentView: View {
   func updateResponse(at index: Int, _ response: String?) {
     let responseText = response ?? "nil"
     print("response →", responseText)
-    if index < commandResponsePairs.count {
-      commandResponsePairs[index].response = responseText
-    }
+    if index < commandResponsePairs.count { commandResponsePairs[index].response = responseText }
 
     testCommandIndex += 1
     if testCommandIndex >= testCommands.count {
@@ -67,11 +56,9 @@ struct ContentView: View {
   func submitCommand() {
     guard let bridge else { return }
     let command = inputText
-    
     // Add command immediately with empty response
     let index = commandResponsePairs.count
     commandResponsePairs.append((command: command, response: ""))
-    
     // Update response asynchronously when it arrives
     Task {
       let response = await bridge.sendCommand(command)
@@ -82,11 +69,8 @@ struct ContentView: View {
   var body: some View {
     VStack(spacing: 0) {
       if bridge == nil {
-        Button("Start Engine") { Task { await startEngine() } }
-          .padding()
-          .foregroundColor(.white)
-          .background(Color.blue)
-          .cornerRadius(10)
+        Button("Start Engine") { Task { await startEngine() } }.padding().foregroundColor(.white)
+          .background(Color.blue).cornerRadius(10)
       }
 
       if bridge != nil {
@@ -95,33 +79,25 @@ struct ContentView: View {
             ScrollView {
               VStack(alignment: .trailing, spacing: 8) {
                 Spacer()
-                
                 ForEach(Array(commandResponsePairs.enumerated()), id: \.offset) { index, pair in
                   HStack(alignment: .top, spacing: 16) {
                     // Command on the left
-                    Text(pair.command)
-                      .font(.caption)
+                    Text(pair.command).font(.caption)
                       .frame(maxWidth: .infinity, alignment: .leading)
 
                     // Response on the right
-                    Text(pair.response.isEmpty ? "..." : pair.response)
-                      .font(.caption)
-                      .foregroundColor(.white)
-                      .padding()
-                      .frame(maxWidth: .infinity, alignment: .leading)
-                      .background(Color.black)
+                    Text(pair.response.isEmpty ? "..." : pair.response).font(.caption)
+                      .foregroundColor(.white).padding()
+                      .frame(maxWidth: .infinity, alignment: .leading).background(Color.black)
                   }
                   .id(index)
                 }
               }
-              .frame(minHeight: geometry.size.height - 50)
-              .padding()
+              .frame(minHeight: geometry.size.height - 50).padding()
             }
             .onChange(of: commandResponsePairs.count) { _ in
               if let lastIndex = commandResponsePairs.indices.last {
-                withAnimation {
-                  proxy.scrollTo(lastIndex, anchor: .bottom)
-                }
+                withAnimation { proxy.scrollTo(lastIndex, anchor: .bottom) }
               }
             }
           }
@@ -133,30 +109,20 @@ struct ContentView: View {
           TextField("Enter text here", text: $inputText)
             .textFieldStyle(RoundedBorderTextFieldStyle())
 
-          Button("Submit") { submitCommand() }
-            .padding(.horizontal)
-            .foregroundColor(.white)
-            .background(Color.blue)
-            .cornerRadius(10)
+          Button("Submit") { submitCommand() }.padding(.horizontal).foregroundColor(.white)
+            .background(Color.blue).cornerRadius(10)
         }
         .padding()
 
         if !engineError.isEmpty {
-          Text("Error: \(engineError)")
-            .foregroundColor(.red)
-            .font(.caption)
-            .padding(.horizontal)
+          Text("Error: \(engineError)").foregroundColor(.red).font(.caption).padding(.horizontal)
         }
 
-        Button("Stop Engine") { Task { await stopEngine() } }
-          .padding()
+        Button("Stop Engine") { Task { await stopEngine() } }.padding()
       }
     }
-    .padding()
-    .onDisappear { Task { await stopEngine() } }
+    .padding().onDisappear { Task { await stopEngine() } }
   }
 }
 
-#Preview {
-  ContentView()
-}
+#Preview { ContentView() }

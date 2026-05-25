@@ -17,16 +17,13 @@ struct FENParser {
 
     let boardPart = String(parts[0])
     let activeColor = String(parts[1])
-    
     // Validate active color
     guard activeColor == "w" || activeColor == "b" else { return nil }
 
     // Valid chess piece characters
     let validPieces: Set<Character> = ["p", "r", "n", "b", "q", "k", "P", "R", "N", "B", "Q", "K"]
-    
     var pieces: [(file: Int, rank: Int, piece: Character)] = []
     let ranks = boardPart.split(separator: "/")
-    
     // Must have exactly 8 ranks
     guard ranks.count == 8 else { return nil }
 
@@ -45,7 +42,6 @@ struct FENParser {
           return nil
         }
       }
-      
       // Each rank must have exactly 8 squares
       guard fileIndex == 8 else { return nil }
     }

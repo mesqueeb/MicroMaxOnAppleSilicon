@@ -13,7 +13,7 @@ public func fileRankToCoordinate(file: Int, rank: Int) -> ChessBoardCoordinate? 
 /// - "rank" is the row index
 public func coordinateToFileRank(_ tile: ChessBoardCoordinate) -> (file: Int, rank: Int)? {
   guard let rowChar = tile.rawValue.last, let row = Int(String(rowChar)),
-        let columnChar = tile.rawValue.first
+    let columnChar = tile.rawValue.first
   else { return nil }
 
   // Calculate row index

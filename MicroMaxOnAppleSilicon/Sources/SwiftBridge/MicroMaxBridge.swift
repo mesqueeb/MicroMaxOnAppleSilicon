@@ -18,12 +18,12 @@ public actor MicroMaxBridge {
     }
 
     // Run on background thread since C code blocks
-    let initOutput = await Task.detached { () -> String in
-      guard let result = micromax_engine_start(iniPath) else {
-        return ""
+    let initOutput =
+      await Task.detached { () -> String in
+        guard let result = micromax_engine_start(iniPath) else { return "" }
+        return String(cString: result)
       }
-      return String(cString: result)
-    }.value
+      .value
 
     isRunning = true
     return initOutput.isEmpty ? nil : initOutput
@@ -55,29 +55,25 @@ public actor MicroMaxBridge {
     guard isRunning else { return nil }
 
     // Run on background thread since C code blocks until engine responds
-    let response = await Task.detached { () -> String in
-      guard let result = micromax_engine_send_command(command) else {
-        return ""
+    let response =
+      await Task.detached { () -> String in
+        guard let result = micromax_engine_send_command(command) else { return "" }
+        return String(cString: result)
       }
-      return String(cString: result)
-    }.value
+      .value
 
     return response.isEmpty ? nil : response
   }
 
   /// Check if the engine is currently running.
-  public var engineRunning: Bool {
-    isRunning
-  }
+  public var engineRunning: Bool { isRunning }
 
   // MARK: - Position Setup
 
   /// Set up a chess position from a FEN string using WinBoard edit mode
   /// - Parameter fen: FEN string describing the position
   private func setupPositionFromFEN(_ fen: String) async throws {
-    guard let parsed = FENParser.parse(fen) else {
-      throw MicroMaxError.invalidFEN
-    }
+    guard let parsed = FENParser.parse(fen) else { throw MicroMaxError.invalidFEN }
 
     // Start fresh game
     _ = await sendCommand("new")
@@ -118,9 +114,7 @@ public actor MicroMaxBridge {
   /// - Returns: The move as (from, to) coordinates
   /// - Throws: MicroMaxError if engine not running, invalid FEN, or no move returned
   public func requestAiMove(fenState: String, thinkTime: Int = 3) async throws -> MoveResult {
-    guard isRunning else {
-      throw MicroMaxError.engineNotRunning
-    }
+    guard isRunning else { throw MicroMaxError.engineNotRunning }
 
     // Set up the position from FEN
     try await setupPositionFromFEN(fenState)
@@ -129,14 +123,10 @@ public actor MicroMaxBridge {
     _ = await sendCommand("st \(thinkTime)")
 
     // Ask engine to think and make a move
-    guard let response = await sendCommand("go") else {
-      throw MicroMaxError.noMoveReturned
-    }
+    guard let response = await sendCommand("go") else { throw MicroMaxError.noMoveReturned }
 
     // Parse the move from response
-    guard let move = parseMoveResponse(response) else {
-      throw MicroMaxError.noMoveReturned
-    }
+    guard let move = parseMoveResponse(response) else { throw MicroMaxError.noMoveReturned }
 
     return move
   }
@@ -169,14 +159,14 @@ public actor MicroMaxBridge {
 
     // Parse source square (e.g., "e2")
     guard let fromFile = chars[0].asciiValue.map({ Int($0) - 97 }),
-      let fromRank = Int(String(chars[1])).map({ $0 - 1 }),
-      fromFile >= 0, fromFile < 8, fromRank >= 0, fromRank < 8
+      let fromRank = Int(String(chars[1])).map({ $0 - 1 }), fromFile >= 0, fromFile < 8,
+      fromRank >= 0, fromRank < 8
     else { return nil }
 
     // Parse destination square (e.g., "e4")
     guard let toFile = chars[2].asciiValue.map({ Int($0) - 97 }),
-      let toRank = Int(String(chars[3])).map({ $0 - 1 }),
-      toFile >= 0, toFile < 8, toRank >= 0, toRank < 8
+      let toRank = Int(String(chars[3])).map({ $0 - 1 }), toFile >= 0, toFile < 8, toRank >= 0,
+      toRank < 8
     else { return nil }
 
     let from = fileRankToCoordinate(file: fromFile, rank: fromRank)
@@ -196,14 +186,10 @@ public enum MicroMaxError: Error, LocalizedError {
 
   public var errorDescription: String? {
     switch self {
-    case .iniFileNotFound:
-      return "Could not find fmax.ini configuration file"
-    case .engineNotRunning:
-      return "Engine is not running"
-    case .invalidFEN:
-      return "Invalid FEN string"
-    case .noMoveReturned:
-      return "Engine did not return a move"
+    case .iniFileNotFound: return "Could not find fmax.ini configuration file"
+    case .engineNotRunning: return "Engine is not running"
+    case .invalidFEN: return "Invalid FEN string"
+    case .noMoveReturned: return "Engine did not return a move"
     }
   }
 }

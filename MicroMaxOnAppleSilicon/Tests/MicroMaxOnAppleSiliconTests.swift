@@ -23,13 +23,27 @@ struct FileRank: Equatable {
 
 @Suite struct CoordinateTests {
   @Test func coordinateToFileRank() {
-    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B1)) == FileRank(file: 1, rank: 0))
-    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B3)) == FileRank(file: 1, rank: 2))
-    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.C3)) == FileRank(file: 2, rank: 2))
-    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D2)) == FileRank(file: 3, rank: 1))
-    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D3)) == FileRank(file: 3, rank: 2))
-    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D8)) == FileRank(file: 3, rank: 7))
-    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.H4)) == FileRank(file: 7, rank: 3))
+    #expect(
+      FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B1)) == FileRank(file: 1, rank: 0)
+    )
+    #expect(
+      FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B3)) == FileRank(file: 1, rank: 2)
+    )
+    #expect(
+      FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.C3)) == FileRank(file: 2, rank: 2)
+    )
+    #expect(
+      FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D2)) == FileRank(file: 3, rank: 1)
+    )
+    #expect(
+      FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D3)) == FileRank(file: 3, rank: 2)
+    )
+    #expect(
+      FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D8)) == FileRank(file: 3, rank: 7)
+    )
+    #expect(
+      FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.H4)) == FileRank(file: 7, rank: 3)
+    )
   }
 
   @Test func fileRankToCoordinate() {
@@ -73,130 +87,148 @@ struct FileRank: Equatable {
 
     #expect(result.activeColor == "b", "Active color should be black")
 
-    #expect(result.pieces.contains { $0.piece == "N" && $0.file == 5 && $0.rank == 2 }, "White knight should be on f3")
-    #expect(result.pieces.contains { $0.piece == "P" && $0.file == 4 && $0.rank == 3 }, "White pawn should be on e4")
-    #expect(result.pieces.contains { $0.piece == "p" && $0.file == 4 && $0.rank == 4 }, "Black pawn should be on e5")
+    #expect(
+      result.pieces.contains { $0.piece == "N" && $0.file == 5 && $0.rank == 2 },
+      "White knight should be on f3"
+    )
+    #expect(
+      result.pieces.contains { $0.piece == "P" && $0.file == 4 && $0.rank == 3 },
+      "White pawn should be on e4"
+    )
+    #expect(
+      result.pieces.contains { $0.piece == "p" && $0.file == 4 && $0.rank == 4 },
+      "Black pawn should be on e5"
+    )
   }
 
   @Test func invalidFEN() {
     #expect(FENParser.parse("invalid") == nil, "FEN without space should be invalid")
     #expect(FENParser.parse("invalid fen") == nil, "FEN with invalid characters should be invalid")
-    #expect(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR x KQkq - 0 1") == nil, "Invalid active color should be invalid")
-    #expect(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP w KQkq - 0 1") == nil, "FEN with only 7 ranks should be invalid")
-    #expect(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR/EXTRA w KQkq - 0 1") == nil, "FEN with 9 ranks should be invalid")
+    #expect(
+      FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR x KQkq - 0 1") == nil,
+      "Invalid active color should be invalid"
+    )
+    #expect(
+      FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP w KQkq - 0 1") == nil,
+      "FEN with only 7 ranks should be invalid"
+    )
+    #expect(
+      FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR/EXTRA w KQkq - 0 1") == nil,
+      "FEN with 9 ranks should be invalid"
+    )
   }
 }
 
 /// Engine tests share global C state (engine_state in MicroMaxEngine.c), so the whole
 /// nested suite must run serially even though Swift Testing parallelises by default.
 @Suite(.serialized) struct EngineLifecycle {
-@Suite struct EngineTests {
-  @Test func startEngineReturnsInitBanners() async throws {
-    let bridge = MicroMaxBridge()
-    let initOutput = try await bridge.startEngine()
+  @Suite struct EngineTests {
+    @Test func startEngineReturnsInitBanners() async throws {
+      let bridge = MicroMaxBridge()
+      let initOutput = try await bridge.startEngine()
 
-    #expect(initOutput != nil, "Engine should return init banners")
-    #expect(initOutput?.contains("Fairy-Max") == true, "Init output should contain Fairy-Max")
+      #expect(initOutput != nil, "Engine should return init banners")
+      #expect(initOutput?.contains("Fairy-Max") == true, "Init output should contain Fairy-Max")
 
-    let isRunning = await bridge.engineRunning
-    #expect(isRunning, "Engine should be running after start")
+      let isRunning = await bridge.engineRunning
+      #expect(isRunning, "Engine should be running after start")
 
-    await bridge.stopEngine()
-  }
-
-  @Test func sendCommandNoResponse() async throws {
-    let bridge = MicroMaxBridge()
-    _ = try await bridge.startEngine()
-
-    let response = await bridge.sendCommand("new")
-    #expect(response == nil, "'new' command should return nil (no response)")
-
-    await bridge.stopEngine()
-  }
-
-  @Test func sendCommandWithResponse() async throws {
-    let bridge = MicroMaxBridge()
-    _ = try await bridge.startEngine()
-
-    _ = await bridge.sendCommand("new")
-    _ = await bridge.sendCommand("force")
-    _ = await bridge.sendCommand("st 1")
-
-    let response = await bridge.sendCommand("go")
-    #expect(response != nil, "'go' command should return a response")
-    #expect(response?.starts(with: "move ") == true, "Response should be a move like 'move e2e4'")
-
-    await bridge.stopEngine()
-  }
-
-  @Test func engineStartStop() async throws {
-    let bridge = MicroMaxBridge()
-    _ = try await bridge.startEngine()
-
-    let isRunning = await bridge.engineRunning
-    #expect(isRunning, "Engine should be running after start")
-
-    await bridge.stopEngine()
-
-    let isStoppedNow = await bridge.engineRunning
-    #expect(isStoppedNow == false, "Engine should not be running after stop")
-  }
-}
-
-@Suite struct RequestAiMoveTests {
-  @Test func startingPosition() async throws {
-    let bridge = MicroMaxBridge()
-    _ = try await bridge.startEngine()
-
-    let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    let move = try await bridge.requestAiMove(fenState: fen, thinkTime: 1)
-
-    #expect(move.from != nil, "Move should have a source square")
-    #expect(move.to != nil, "Move should have a destination square")
-
-    if let from = move.from, let fromRank = coordinateToFileRank(from)?.rank {
-      #expect(fromRank == 0 || fromRank == 1, "White's first move should be from rank 1 or 2")
+      await bridge.stopEngine()
     }
 
-    await bridge.stopEngine()
-  }
+    @Test func sendCommandNoResponse() async throws {
+      let bridge = MicroMaxBridge()
+      _ = try await bridge.startEngine()
 
-  @Test func midGame() async throws {
-    let bridge = MicroMaxBridge()
-    _ = try await bridge.startEngine()
+      let response = await bridge.sendCommand("new")
+      #expect(response == nil, "'new' command should return nil (no response)")
 
-    // Position after 1.e4 - black to move
-    let fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
-    let move = try await bridge.requestAiMove(fenState: fen, thinkTime: 1)
-
-    #expect(move.from != nil, "Move should have a source square")
-    #expect(move.to != nil, "Move should have a destination square")
-
-    if let from = move.from, let fromRank = coordinateToFileRank(from)?.rank {
-      #expect(fromRank >= 6, "Black's move should be from rank 7 or 8 (index 6 or 7)")
+      await bridge.stopEngine()
     }
 
-    await bridge.stopEngine()
-  }
+    @Test func sendCommandWithResponse() async throws {
+      let bridge = MicroMaxBridge()
+      _ = try await bridge.startEngine()
 
-  @Test func notRunning() async {
-    let bridge = MicroMaxBridge()
-    let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+      _ = await bridge.sendCommand("new")
+      _ = await bridge.sendCommand("force")
+      _ = await bridge.sendCommand("st 1")
 
-    await #expect(throws: MicroMaxError.engineNotRunning) {
-      _ = try await bridge.requestAiMove(fenState: fen)
+      let response = await bridge.sendCommand("go")
+      #expect(response != nil, "'go' command should return a response")
+      #expect(response?.starts(with: "move ") == true, "Response should be a move like 'move e2e4'")
+
+      await bridge.stopEngine()
+    }
+
+    @Test func engineStartStop() async throws {
+      let bridge = MicroMaxBridge()
+      _ = try await bridge.startEngine()
+
+      let isRunning = await bridge.engineRunning
+      #expect(isRunning, "Engine should be running after start")
+
+      await bridge.stopEngine()
+
+      let isStoppedNow = await bridge.engineRunning
+      #expect(isStoppedNow == false, "Engine should not be running after stop")
     }
   }
 
-  @Test func invalidFEN() async throws {
-    let bridge = MicroMaxBridge()
-    _ = try await bridge.startEngine()
+  @Suite struct RequestAiMoveTests {
+    @Test func startingPosition() async throws {
+      let bridge = MicroMaxBridge()
+      _ = try await bridge.startEngine()
 
-    await #expect(throws: MicroMaxError.invalidFEN) {
-      _ = try await bridge.requestAiMove(fenState: "invalid fen")
+      let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+      let move = try await bridge.requestAiMove(fenState: fen, thinkTime: 1)
+
+      #expect(move.from != nil, "Move should have a source square")
+      #expect(move.to != nil, "Move should have a destination square")
+
+      if let from = move.from, let fromRank = coordinateToFileRank(from)?.rank {
+        #expect(fromRank == 0 || fromRank == 1, "White's first move should be from rank 1 or 2")
+      }
+
+      await bridge.stopEngine()
     }
 
-    await bridge.stopEngine()
+    @Test func midGame() async throws {
+      let bridge = MicroMaxBridge()
+      _ = try await bridge.startEngine()
+
+      // Position after 1.e4 - black to move
+      let fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
+      let move = try await bridge.requestAiMove(fenState: fen, thinkTime: 1)
+
+      #expect(move.from != nil, "Move should have a source square")
+      #expect(move.to != nil, "Move should have a destination square")
+
+      if let from = move.from, let fromRank = coordinateToFileRank(from)?.rank {
+        #expect(fromRank >= 6, "Black's move should be from rank 7 or 8 (index 6 or 7)")
+      }
+
+      await bridge.stopEngine()
+    }
+
+    @Test func notRunning() async {
+      let bridge = MicroMaxBridge()
+      let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
+      await #expect(throws: MicroMaxError.engineNotRunning) {
+        _ = try await bridge.requestAiMove(fenState: fen)
+      }
+    }
+
+    @Test func invalidFEN() async throws {
+      let bridge = MicroMaxBridge()
+      _ = try await bridge.startEngine()
+
+      await #expect(throws: MicroMaxError.invalidFEN) {
+        _ = try await bridge.requestAiMove(fenState: "invalid fen")
+      }
+
+      await bridge.stopEngine()
+    }
   }
-}
 }

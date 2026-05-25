@@ -1,6 +1,6 @@
-
 /// The Chess Board Coordinates from A1 until H8
 public enum ChessBoardCoordinate: String, CustomStringConvertible, Sendable {
+  // swift-format-ignore
   case A1, A2, A3, A4, A5, A6, A7, A8,
        B1, B2, B3, B4, B5, B6, B7, B8,
        C1, C2, C3, C4, C5, C6, C7, C8,
@@ -11,9 +11,7 @@ public enum ChessBoardCoordinate: String, CustomStringConvertible, Sendable {
        H1, H2, H3, H4, H5, H6, H7, H8
 
   /// The string used when this enum is interpolated
-  public var description: String {
-    return self.rawValue
-  }
+  public var description: String { return self.rawValue }
 }
 
 /// The Chess piece color

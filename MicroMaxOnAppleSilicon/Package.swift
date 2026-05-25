@@ -12,14 +12,10 @@ let package = Package(
     .library(
       name: "MicroMaxOnAppleSilicon",
       targets: ["MicroMaxCBridge", "MicroMaxOnAppleSilicon"]
-    ),
+    )
   ],
   targets: [
-    .target(
-      name: "MicroMaxCBridge",
-      path: "Sources/CBridge",
-      publicHeadersPath: "include"
-    ),
+    .target(name: "MicroMaxCBridge", path: "Sources/CBridge", publicHeadersPath: "include"),
     .target(
       name: "MicroMaxOnAppleSilicon",
       dependencies: ["MicroMaxCBridge"],

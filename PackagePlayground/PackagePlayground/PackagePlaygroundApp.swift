@@ -7,11 +7,4 @@
 
 import SwiftUI
 
-@main
-struct PackagePlaygroundApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
-}
+@main struct PackagePlaygroundApp: App { var body: some Scene { WindowGroup { ContentView() } } }

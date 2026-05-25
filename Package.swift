@@ -9,7 +9,7 @@ let package = Package(
     .library(
       name: "MicroMaxOnAppleSilicon",
       targets: ["MicroMaxCBridge", "MicroMaxOnAppleSilicon"]
-    ),
+    )
   ],
   targets: [
     .target(

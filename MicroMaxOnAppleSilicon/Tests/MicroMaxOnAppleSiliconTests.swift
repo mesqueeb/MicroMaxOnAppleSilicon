@@ -1,5 +1,5 @@
 @testable import MicroMaxOnAppleSilicon
-import XCTest
+import Testing
 
 struct FileRank: Equatable {
   let file: Int
@@ -21,127 +21,101 @@ struct FileRank: Equatable {
   }
 }
 
-class MicroMaxOnAppleSiliconTests: XCTestCase {
-  var bridge: MicroMaxBridge!
-
-  override func setUpWithError() throws {
-    bridge = MicroMaxBridge()
+@Suite struct CoordinateTests {
+  @Test func coordinateToFileRank() {
+    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B1)) == FileRank(file: 1, rank: 0))
+    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B3)) == FileRank(file: 1, rank: 2))
+    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.C3)) == FileRank(file: 2, rank: 2))
+    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D2)) == FileRank(file: 3, rank: 1))
+    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D3)) == FileRank(file: 3, rank: 2))
+    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D8)) == FileRank(file: 3, rank: 7))
+    #expect(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.H4)) == FileRank(file: 7, rank: 3))
   }
 
-  override func tearDownWithError() throws {
-    // Cleanup handled in individual tests
+  @Test func fileRankToCoordinate() {
+    #expect(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 1, rank: 0) == .B1)
+    #expect(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 1, rank: 2) == .B3)
+    #expect(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 2, rank: 2) == .C3)
+    #expect(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 3, rank: 1) == .D2)
+    #expect(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 3, rank: 2) == .D3)
+    #expect(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 3, rank: 7) == .D8)
+    #expect(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 7, rank: 3) == .H4)
   }
+}
 
-  // MARK: - Coordinate Tests
-
-  func testCoordinateToFileRank() {
-    XCTAssertTrue(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B1)) == FileRank(file: 1, rank: 0))
-    XCTAssertTrue(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.B3)) == FileRank(file: 1, rank: 2))
-    XCTAssertTrue(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.C3)) == FileRank(file: 2, rank: 2))
-    XCTAssertTrue(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D2)) == FileRank(file: 3, rank: 1))
-    XCTAssertTrue(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D3)) == FileRank(file: 3, rank: 2))
-    XCTAssertTrue(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.D8)) == FileRank(file: 3, rank: 7))
-    XCTAssertTrue(FileRank(MicroMaxOnAppleSilicon.coordinateToFileRank(.H4)) == FileRank(file: 7, rank: 3))
-  }
-
-  func testFileRankToCoordinate() {
-    XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 1, rank: 0) == .B1)
-    XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 1, rank: 2) == .B3)
-    XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 2, rank: 2) == .C3)
-    XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 3, rank: 1) == .D2)
-    XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 3, rank: 2) == .D3)
-    XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 3, rank: 7) == .D8)
-    XCTAssertTrue(MicroMaxOnAppleSilicon.fileRankToCoordinate(file: 7, rank: 3) == .H4)
-  }
-
-  // MARK: - FEN Parser Tests
-
-  func testFENParserStartingPosition() {
+@Suite struct FENParserTests {
+  @Test func startingPosition() throws {
     let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    guard let result = FENParser.parse(fen) else {
-      XCTFail("Failed to parse starting position FEN")
-      return
-    }
+    let result = try #require(FENParser.parse(fen), "Failed to parse starting position FEN")
 
-    XCTAssertEqual(result.activeColor, "w", "Active color should be white")
-    XCTAssertEqual(result.pieces.count, 32, "Starting position should have 32 pieces")
+    #expect(result.activeColor == "w", "Active color should be white")
+    #expect(result.pieces.count == 32, "Starting position should have 32 pieces")
 
-    // Check some specific pieces
     let whitePawns = result.pieces.filter { $0.piece == "P" }
-    XCTAssertEqual(whitePawns.count, 8, "Should have 8 white pawns")
+    #expect(whitePawns.count == 8, "Should have 8 white pawns")
 
     let blackPawns = result.pieces.filter { $0.piece == "p" }
-    XCTAssertEqual(blackPawns.count, 8, "Should have 8 black pawns")
+    #expect(blackPawns.count == 8, "Should have 8 black pawns")
 
-    // Check white king at e1 (file 4, rank 0)
-    let whiteKing = result.pieces.first { $0.piece == "K" }
-    XCTAssertNotNil(whiteKing)
-    XCTAssertEqual(whiteKing?.file, 4, "White king should be on file e (4)")
-    XCTAssertEqual(whiteKing?.rank, 0, "White king should be on rank 1 (0)")
+    let whiteKing = try #require(result.pieces.first { $0.piece == "K" })
+    #expect(whiteKing.file == 4, "White king should be on file e (4)")
+    #expect(whiteKing.rank == 0, "White king should be on rank 1 (0)")
 
-    // Check black king at e8 (file 4, rank 7)
-    let blackKing = result.pieces.first { $0.piece == "k" }
-    XCTAssertNotNil(blackKing)
-    XCTAssertEqual(blackKing?.file, 4, "Black king should be on file e (4)")
-    XCTAssertEqual(blackKing?.rank, 7, "Black king should be on rank 8 (7)")
+    let blackKing = try #require(result.pieces.first { $0.piece == "k" })
+    #expect(blackKing.file == 4, "Black king should be on file e (4)")
+    #expect(blackKing.rank == 7, "Black king should be on rank 8 (7)")
   }
 
-  func testFENParserMidGamePosition() {
+  @Test func midGamePosition() throws {
     // Position after 1.e4 e5 2.Nf3
     let fen = "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2"
-    guard let result = FENParser.parse(fen) else {
-      XCTFail("Failed to parse mid-game FEN")
-      return
-    }
+    let result = try #require(FENParser.parse(fen), "Failed to parse mid-game FEN")
 
-    XCTAssertEqual(result.activeColor, "b", "Active color should be black")
+    #expect(result.activeColor == "b", "Active color should be black")
 
-    // Check knight on f3 (file 5, rank 2)
-    let whiteKnight = result.pieces.first { $0.piece == "N" && $0.file == 5 && $0.rank == 2 }
-    XCTAssertNotNil(whiteKnight, "White knight should be on f3")
-
-    // Check pawn on e4 (file 4, rank 3)
-    let whitePawn = result.pieces.first { $0.piece == "P" && $0.file == 4 && $0.rank == 3 }
-    XCTAssertNotNil(whitePawn, "White pawn should be on e4")
-
-    // Check pawn on e5 (file 4, rank 4)
-    let blackPawn = result.pieces.first { $0.piece == "p" && $0.file == 4 && $0.rank == 4 }
-    XCTAssertNotNil(blackPawn, "Black pawn should be on e5")
+    #expect(result.pieces.contains { $0.piece == "N" && $0.file == 5 && $0.rank == 2 }, "White knight should be on f3")
+    #expect(result.pieces.contains { $0.piece == "P" && $0.file == 4 && $0.rank == 3 }, "White pawn should be on e4")
+    #expect(result.pieces.contains { $0.piece == "p" && $0.file == 4 && $0.rank == 4 }, "Black pawn should be on e5")
   }
 
-  func testFENParserInvalidFEN() {
-    // Test various invalid FEN strings
-    XCTAssertNil(FENParser.parse("invalid"), "FEN without space should be invalid")
-    XCTAssertNil(FENParser.parse("invalid fen"), "FEN with invalid characters should be invalid")
-    XCTAssertNil(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR x KQkq - 0 1"), "Invalid active color should be invalid")
-    XCTAssertNil(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP w KQkq - 0 1"), "FEN with only 7 ranks should be invalid")
-    XCTAssertNil(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR/EXTRA w KQkq - 0 1"), "FEN with 9 ranks should be invalid")
+  @Test func invalidFEN() {
+    #expect(FENParser.parse("invalid") == nil, "FEN without space should be invalid")
+    #expect(FENParser.parse("invalid fen") == nil, "FEN with invalid characters should be invalid")
+    #expect(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR x KQkq - 0 1") == nil, "Invalid active color should be invalid")
+    #expect(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP w KQkq - 0 1") == nil, "FEN with only 7 ranks should be invalid")
+    #expect(FENParser.parse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR/EXTRA w KQkq - 0 1") == nil, "FEN with 9 ranks should be invalid")
   }
+}
 
-  // MARK: - Engine Tests
-
-  func testStartEngineReturnsInitBanners() async throws {
+/// Engine tests share global C state (engine_state in MicroMaxEngine.c), so the whole
+/// nested suite must run serially even though Swift Testing parallelises by default.
+@Suite(.serialized) struct EngineLifecycle {
+@Suite struct EngineTests {
+  @Test func startEngineReturnsInitBanners() async throws {
+    let bridge = MicroMaxBridge()
     let initOutput = try await bridge.startEngine()
 
-    XCTAssertNotNil(initOutput, "Engine should return init banners")
-    XCTAssertTrue(initOutput?.contains("Fairy-Max") == true, "Init output should contain Fairy-Max")
+    #expect(initOutput != nil, "Engine should return init banners")
+    #expect(initOutput?.contains("Fairy-Max") == true, "Init output should contain Fairy-Max")
 
     let isRunning = await bridge.engineRunning
-    XCTAssertTrue(isRunning, "Engine should be running after start")
+    #expect(isRunning, "Engine should be running after start")
 
     await bridge.stopEngine()
   }
 
-  func testSendCommandNoResponse() async throws {
+  @Test func sendCommandNoResponse() async throws {
+    let bridge = MicroMaxBridge()
     _ = try await bridge.startEngine()
 
     let response = await bridge.sendCommand("new")
-    XCTAssertNil(response, "'new' command should return nil (no response)")
+    #expect(response == nil, "'new' command should return nil (no response)")
 
     await bridge.stopEngine()
   }
 
-  func testSendCommandWithResponse() async throws {
+  @Test func sendCommandWithResponse() async throws {
+    let bridge = MicroMaxBridge()
     _ = try await bridge.startEngine()
 
     _ = await bridge.sendCommand("new")
@@ -149,89 +123,80 @@ class MicroMaxOnAppleSiliconTests: XCTestCase {
     _ = await bridge.sendCommand("st 1")
 
     let response = await bridge.sendCommand("go")
-    XCTAssertNotNil(response, "'go' command should return a response")
-    XCTAssertTrue(response?.starts(with: "move ") == true, "Response should be a move like 'move e2e4'")
+    #expect(response != nil, "'go' command should return a response")
+    #expect(response?.starts(with: "move ") == true, "Response should be a move like 'move e2e4'")
 
     await bridge.stopEngine()
   }
 
-  func testEngineStartStop() async throws {
+  @Test func engineStartStop() async throws {
+    let bridge = MicroMaxBridge()
     _ = try await bridge.startEngine()
 
     let isRunning = await bridge.engineRunning
-    XCTAssertTrue(isRunning, "Engine should be running after start")
+    #expect(isRunning, "Engine should be running after start")
 
     await bridge.stopEngine()
 
     let isStoppedNow = await bridge.engineRunning
-    XCTAssertFalse(isStoppedNow, "Engine should not be running after stop")
+    #expect(isStoppedNow == false, "Engine should not be running after stop")
   }
+}
 
-  // MARK: - requestAiMove Tests
-
-  func testRequestAiMoveStartingPosition() async throws {
+@Suite struct RequestAiMoveTests {
+  @Test func startingPosition() async throws {
+    let bridge = MicroMaxBridge()
     _ = try await bridge.startEngine()
 
-    // Starting position - white to move
     let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     let move = try await bridge.requestAiMove(fenState: fen, thinkTime: 1)
 
-    XCTAssertNotNil(move.from, "Move should have a source square")
-    XCTAssertNotNil(move.to, "Move should have a destination square")
+    #expect(move.from != nil, "Move should have a source square")
+    #expect(move.to != nil, "Move should have a destination square")
 
-    // Verify it's a valid starting move (piece from rank 1 or 2)
     if let from = move.from, let fromRank = coordinateToFileRank(from)?.rank {
-      XCTAssertTrue(fromRank == 0 || fromRank == 1, "White's first move should be from rank 1 or 2")
+      #expect(fromRank == 0 || fromRank == 1, "White's first move should be from rank 1 or 2")
     }
 
     await bridge.stopEngine()
   }
 
-  func testRequestAiMoveMidGame() async throws {
+  @Test func midGame() async throws {
+    let bridge = MicroMaxBridge()
     _ = try await bridge.startEngine()
 
     // Position after 1.e4 - black to move
     let fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1"
     let move = try await bridge.requestAiMove(fenState: fen, thinkTime: 1)
 
-    XCTAssertNotNil(move.from, "Move should have a source square")
-    XCTAssertNotNil(move.to, "Move should have a destination square")
+    #expect(move.from != nil, "Move should have a source square")
+    #expect(move.to != nil, "Move should have a destination square")
 
-    // Verify it's a valid black move (piece from rank 6 or 7)
     if let from = move.from, let fromRank = coordinateToFileRank(from)?.rank {
-      XCTAssertTrue(fromRank >= 6, "Black's move should be from rank 7 or 8 (index 6 or 7)")
+      #expect(fromRank >= 6, "Black's move should be from rank 7 or 8 (index 6 or 7)")
     }
 
     await bridge.stopEngine()
   }
 
-  func testRequestAiMoveNotRunning() async {
-    // Don't start the engine
+  @Test func notRunning() async {
+    let bridge = MicroMaxBridge()
     let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
-    do {
+    await #expect(throws: MicroMaxError.engineNotRunning) {
       _ = try await bridge.requestAiMove(fenState: fen)
-      XCTFail("Should throw engineNotRunning error")
-    } catch let error as MicroMaxError {
-      XCTAssertEqual(error, .engineNotRunning)
-    } catch {
-      XCTFail("Wrong error type: \(error)")
     }
   }
 
-  func testRequestAiMoveInvalidFEN() async throws {
+  @Test func invalidFEN() async throws {
+    let bridge = MicroMaxBridge()
     _ = try await bridge.startEngine()
 
-    do {
-      // "invalid fen" should be invalid (invalid characters, not 8 ranks, invalid color)
+    await #expect(throws: MicroMaxError.invalidFEN) {
       _ = try await bridge.requestAiMove(fenState: "invalid fen")
-      XCTFail("Should throw invalidFEN error")
-    } catch let error as MicroMaxError {
-      XCTAssertEqual(error, .invalidFEN)
-    } catch {
-      XCTFail("Wrong error type: \(error)")
     }
 
     await bridge.stopEngine()
   }
+}
 }

@@ -5,7 +5,10 @@
 #include <pthread.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <signal.h>
 #include "include/MicroMaxEngine.h"
+
+volatile sig_atomic_t micromax_should_stop = 0;
 
 /* -------------------- Constants -------------------- */
 
@@ -285,13 +288,11 @@ const char* micromax_engine_start(const char* iniFilePath) {
     // Note: We do NOT redirect stdout here. Instead, Fairymax uses engine_printf()
     // which writes directly to our pipe. This keeps stdout available for Swift's print().
     
-    // Create engine thread
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-    pthread_create(&engine_state.engine_thread, &attr, engine_thread_func, NULL);
-    pthread_attr_destroy(&attr);
-    
+    /// Engine thread is joinable so micromax_engine_stop can wait for it to exit
+    /// before tearing down the pipes (see issue #4).
+    micromax_should_stop = 0;
+    pthread_create(&engine_state.engine_thread, NULL, engine_thread_func, NULL);
+
     engine_state.initialized = 1;
     
     // Wait for the engine to output its init messages and the first __READY__
@@ -305,25 +306,30 @@ void micromax_engine_stop(void) {
     if (!engine_state.initialized) {
         return;
     }
-    
-    // Send quit command (don't wait for response since engine will exit)
+
+    /// Set the cooperative-cancel flag first so the engine bails out of an
+    /// in-flight search; then queue "quit" so it also exits when parked on
+    /// input. pthread_join blocks until main_fairymax actually returns,
+    /// so no engine code runs against torn-down pipes / state.
+    micromax_should_stop = 1;
     io_send(&engine_state.to_engine, "quit");
-    
-    // Give engine time to process quit
-    usleep(50000); // 50ms
-    
-    // Close pipes
+    pthread_join(engine_state.engine_thread, NULL);
+
+    /// Engine exited without emitting a final __READY__ (it bailed via the
+    /// cancel flag, not via readLineForEngine). Inject one so any pending
+    /// read_until_ready caller can unblock and return cleanly.
+    my_write(engine_state.from_engine.out_fd, READY_MARKER "\n", (int)strlen(READY_MARKER) + 1);
+
     close(engine_state.to_engine.in_fd);
     close(engine_state.to_engine.out_fd);
     close(engine_state.from_engine.in_fd);
     close(engine_state.from_engine.out_fd);
-    
-    // Free ini path
+
     if (engine_state.ini_path) {
         free(engine_state.ini_path);
         engine_state.ini_path = NULL;
     }
-    
+
     engine_state.initialized = 0;
 }
 

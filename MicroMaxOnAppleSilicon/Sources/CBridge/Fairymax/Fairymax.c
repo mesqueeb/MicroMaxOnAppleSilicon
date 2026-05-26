@@ -159,7 +159,7 @@ int k,q,l,e,E,z,n;      /* (q,l)=window, e=current eval. score, E=e.p. sqr.*/
         d=Y=0;                                       /* start iter. from scratch */
     X=a->X;                                       /* start at best-move hint  */
     W(d++<n||d<3||              /*** min depth = 2   iterative deepening loop */
-      z&S&&K==I&&(GetTickCount()-Ticks<tlim&d<=MaxDepth|| /* root: deepen upto time   */
+      z&S&&K==I&&(GetTickCount()-Ticks<tlim&d<=MaxDepth&!micromax_should_stop|| /* root: deepen upto time / cancel */
                   (K=X,L=Y&~S,Score=m,d=3)))                  /* time's up: go do best    */
     {x=B=X;                                       /* start scan at prev. best */
         h=Y&S;                                       /* request try noncastl. 1st*/
@@ -525,6 +525,9 @@ int main_fairymax(int argc, char **argv)
     fd = atoi(argv[0]);
     
     for (;;) {
+        /// Cooperative cancel: micromax_engine_stop sets this so we can exit
+        /// the engine loop cleanly before the host tears down pipes (issue #4).
+        if (micromax_should_stop) return 0;
         fflush(stdout);
         if (Side == Computer) {
             /* think up & do move, measure time used  */

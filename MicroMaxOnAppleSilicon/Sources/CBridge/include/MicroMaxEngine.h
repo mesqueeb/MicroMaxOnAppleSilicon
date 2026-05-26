@@ -1,9 +1,18 @@
 #ifndef MICROMAX_ENGINE_H
 #define MICROMAX_ENGINE_H
 
+#include <signal.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * Cooperative-cancel flag read by the Fairymax engine loop.
+ * Set by micromax_engine_stop to break the engine out of main_fairymax
+ * (and the alpha-beta search) before the host closes its pipes.
+ */
+extern volatile sig_atomic_t micromax_should_stop;
 
 /**
  * Start the MicroMax chess engine.

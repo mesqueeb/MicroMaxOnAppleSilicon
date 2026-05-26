@@ -2,25 +2,22 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PackagePlayground/PackagePlayground.xcodeproj">
+      location = "group:..">
    </FileRef>
    <FileRef
-      location = "group:MicroMaxOnAppleSilicon">
+      location = "group:../PackagePlayground/PackagePlayground.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:package.json">
+      location = "group:../package.json">
    </FileRef>
    <FileRef
-      location = "group:Package.swift">
+      location = "group:../README.md">
    </FileRef>
    <FileRef
-      location = "group:README.md">
-   </FileRef>
-   <FileRef
-      location = "group:LICENSE">
+      location = "group:../LICENSE">
    </FileRef>
    <Group
-      location = "group:docs"
+      location = "group:../docs"
       name = "docs">
       <FileRef
          location = "group:add_to_bundle_resources.jpg">

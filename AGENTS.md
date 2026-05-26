@@ -14,7 +14,7 @@ Run `./test.sh` with `run_in_background: true` and check output to detect crashe
 
 ## Shared C Engine State
 
-The C engine in `MicroMaxOnAppleSilicon/Sources/CBridge/MicroMaxEngine.c` uses a `static struct engine_state` — global, single-instance. Multiple `MicroMaxBridge` instances all talk to the same engine.
+The C engine in `Sources/CBridge/MicroMaxEngine.c` uses a `static struct engine_state` — global, single-instance. Multiple `MicroMaxBridge` instances all talk to the same engine.
 
 Swift Testing parallelises tests by default, which races against this global state. Tests that call `startEngine` / `sendCommand` / `requestAiMove` / `stopEngine` **must** live inside a `@Suite(.serialized)`. See `EngineLifecycle` in `Tests/MicroMaxOnAppleSiliconTests.swift` for the pattern. Pure tests (coordinates, FEN parsing) can stay parallel.
 

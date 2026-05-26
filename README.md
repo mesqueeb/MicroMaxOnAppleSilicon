@@ -38,7 +38,7 @@ do {
 await bridge.stopEngine()
 ```
 
-The library comes with some useful types and helper functions, be sure to check out the [Swift wrapper's source code here](./MicroMaxOnAppleSilicon/Sources/SwiftBridge/).
+The library comes with some useful types and helper functions, be sure to check out the [Swift wrapper's source code here](./Sources/SwiftBridge/).
 
 One example is that you can use FEN state strings to request moves from the engine:
 
@@ -65,13 +65,13 @@ See the [documentation](https://swiftpackageindex.com/mesqueeb/MicroMaxOnAppleSi
 
 ### Advanced Implementation via fmax.ini customizations
 
-The library uses an [fmax.ini](./MicroMaxOnAppleSilicon/Sources/SwiftBridge/Resources/fmax.ini) file bundled with the package to configure the engine's behavior. If you're familiar with C and Chess, you can customize this file to modify how the engine plays.
+The library uses an [fmax.ini](./Sources/SwiftBridge/Resources/fmax.ini) file bundled with the package to configure the engine's behavior. If you're familiar with C and Chess, you can customize this file to modify how the engine plays.
 
-Currently, the engine always uses the `fmax.ini` file from the package bundle. To use a custom `fmax.ini` from your app's Bundle Resources, modify `startEngine()` in [MicroMaxBridge.swift](./MicroMaxOnAppleSilicon/Sources/SwiftBridge/MicroMaxBridge.swift) to check `Bundle.main` before falling back to `Bundle.module`. PRs welcome!
+Currently, the engine always uses the `fmax.ini` file from the package bundle. To use a custom `fmax.ini` from your app's Bundle Resources, modify `startEngine()` in [MicroMaxBridge.swift](./Sources/SwiftBridge/MicroMaxBridge.swift) to check `Bundle.main` before falling back to `Bundle.module`. PRs welcome!
 
 ## Development
 
-Open the workspace [MicroMaxOnAppleSilicon.xcworkspace](./MicroMaxOnAppleSilicon.xcworkspace) in Xcode to run the test apps and XCTests.
+Open the workspace [Xcode/MicroMaxOnAppleSilicon.xcworkspace](./Xcode/MicroMaxOnAppleSilicon.xcworkspace) in Xcode to run the test apps and XCTests.
 
 # Other Projects
 

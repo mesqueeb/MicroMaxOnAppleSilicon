@@ -14,19 +14,19 @@ let package = Package(
   targets: [
     .target(
       name: "MicroMaxCBridge",
-      path: "MicroMaxOnAppleSilicon/Sources/CBridge",
+      path: "Sources/CBridge",
       publicHeadersPath: "include"
     ),
     .target(
       name: "MicroMaxOnAppleSilicon",
       dependencies: ["MicroMaxCBridge"],
-      path: "MicroMaxOnAppleSilicon/Sources/SwiftBridge",
+      path: "Sources/SwiftBridge",
       resources: [.copy("Resources/fmax.ini")]
     ),
     .testTarget(
       name: "MicroMaxOnAppleSiliconTests",
       dependencies: ["MicroMaxCBridge", "MicroMaxOnAppleSilicon"],
-      path: "MicroMaxOnAppleSilicon/Tests"
+      path: "Tests"
     ),
   ],
   cLanguageStandard: .gnu17

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D219D1A32FC53438003B9819 /* MicroMaxOnAppleSilicon in Frameworks */ = {isa = PBXBuildFile; productRef = D219D1A22FC53438003B9819 /* MicroMaxOnAppleSilicon */; };
 		F76323362C3E2458009A39C7 /* PackagePlaygroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76323352C3E2458009A39C7 /* PackagePlaygroundApp.swift */; };
 		F76323382C3E2458009A39C7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76323372C3E2458009A39C7 /* ContentView.swift */; };
 		F763233A2C3E2459009A39C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76323392C3E2459009A39C7 /* Assets.xcassets */; };
 		F763233E2C3E2459009A39C7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F763233D2C3E2459009A39C7 /* Preview Assets.xcassets */; };
-		F76323462C3E24A9009A39C7 /* MicroMaxOnAppleSilicon in Frameworks */ = {isa = PBXBuildFile; productRef = F76323452C3E24A9009A39C7 /* MicroMaxOnAppleSilicon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F76323462C3E24A9009A39C7 /* MicroMaxOnAppleSilicon in Frameworks */,
+				D219D1A32FC53438003B9819 /* MicroMaxOnAppleSilicon in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +96,7 @@
 			);
 			name = PackagePlayground;
 			packageProductDependencies = (
-				F76323452C3E24A9009A39C7 /* MicroMaxOnAppleSilicon */,
+				D219D1A22FC53438003B9819 /* MicroMaxOnAppleSilicon */,
 			);
 			productName = PackagePlayground;
 			productReference = F76323322C3E2458009A39C7 /* PackagePlayground.app */;
@@ -126,6 +126,9 @@
 				Base,
 			);
 			mainGroup = F76323292C3E2458009A39C7;
+			packageReferences = (
+				D219D1A12FC53404003B9819 /* XCLocalSwiftPackageReference ".." */,
+			);
 			productRefGroup = F76323332C3E2458009A39C7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -375,9 +378,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		D219D1A12FC53404003B9819 /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		F76323452C3E24A9009A39C7 /* MicroMaxOnAppleSilicon */ = {
+		D219D1A22FC53438003B9819 /* MicroMaxOnAppleSilicon */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = D219D1A12FC53404003B9819 /* XCLocalSwiftPackageReference ".." */;
 			productName = MicroMaxOnAppleSilicon;
 		};
 /* End XCSwiftPackageProductDependency section */

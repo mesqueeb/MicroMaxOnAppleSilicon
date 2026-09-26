@@ -1,6 +1,6 @@
 {
   "name": "MicroMaxOnAppleSilicon",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "type": "module",
   "scripts": {
     "test": "swift test --enable-swift-testing",
